@@ -53,7 +53,7 @@
 
   <meta name="viewport" content="width=device-width">
   
-  <title>Fakeddit/README.md at master · entitize/Fakeddit</title>
+  <title>Fakeddit/image_downloader.py at master · entitize/Fakeddit</title>
     <meta name="description" content="r/Fakeddit New Multimodal Benchmark Dataset for Fine-grained Fake News Detection - entitize/Fakeddit">
     <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="GitHub">
   <link rel="fluid-icon" href="https://github.com/fluidicon.png" title="GitHub">
@@ -67,11 +67,11 @@
     
 
   <link rel="assets" href="https://github.githubassets.com/">
-    <link rel="shared-web-socket" href="wss://alive.github.com/_sockets/u/12649403/ws?session=eyJ2IjoiVjMiLCJ1IjoxMjY0OTQwMywicyI6NjYzNTMwMzA1LCJjIjozNzAyMzAyNzcwLCJ0IjoxNjE5MTQ4ODM0fQ==--c03289bf9e016e3829cd49d705417492cd79264e25668842475b68d5872b87f3" data-refresh-url="/_alive" data-session-id="1cafa72f4c1c713147ff24d6c206baf8dabbe36c5a31ba55719c6e01db3c51f9">
+    <link rel="shared-web-socket" href="wss://alive.github.com/_sockets/u/12649403/ws?session=eyJ2IjoiVjMiLCJ1IjoxMjY0OTQwMywicyI6NjYzNTMwMzA1LCJjIjozODQ2OTg0NDkwLCJ0IjoxNjE5MTQ4Njc1fQ==--feaace8398901cf6811cb4a74477f234af0cb3ea06ed3e491b016f3a8d45cd58" data-refresh-url="/_alive" data-session-id="1cafa72f4c1c713147ff24d6c206baf8dabbe36c5a31ba55719c6e01db3c51f9">
     <link rel="shared-web-socket-src" href="/socket-worker-3f088aa2.js">
   <link rel="sudo-modal" href="/sessions/sudo_modal">
 
-  <meta name="request-id" content="CC2C:2311:583B9E:5E8B7E:60823FD4" data-pjax-transient="true" /><meta name="html-safe-nonce" content="d9ffd9458135ced999a231a3ba123b363b52f452910f3484fe8baca95e199b1d" data-pjax-transient="true" /><meta name="visitor-payload" content="eyJyZWZlcnJlciI6Imh0dHBzOi8vZ2l0aHViLmNvbS9lbnRpdGl6ZS9mYWtlZGRpdCIsInJlcXVlc3RfaWQiOiJDQzJDOjIzMTE6NTgzQjlFOjVFOEI3RTo2MDgyM0ZENCIsInZpc2l0b3JfaWQiOiI2NTYzNTE0NTAzMDQyMjIzMzgyIiwicmVnaW9uX2VkZ2UiOiJzZWEiLCJyZWdpb25fcmVuZGVyIjoiaWFkIn0=" data-pjax-transient="true" /><meta name="visitor-hmac" content="05bf33d5555bd4e8225dc69b602b278a0dd8e72ba534ca3b7b6c16c91c138870" data-pjax-transient="true" />
+  <meta name="request-id" content="CC2C:2311:57DA1C:5E24FA:60823F75" data-pjax-transient="true" /><meta name="html-safe-nonce" content="d9ffd9458135ced999a231a3ba123b363b52f452910f3484fe8baca95e199b1d" data-pjax-transient="true" /><meta name="visitor-payload" content="eyJyZWZlcnJlciI6Imh0dHBzOi8vZ2l0aHViLmNvbS9lbnRpdGl6ZS9mYWtlZGRpdCIsInJlcXVlc3RfaWQiOiJDQzJDOjIzMTE6NTdEQTFDOjVFMjRGQTo2MDgyM0Y3NSIsInZpc2l0b3JfaWQiOiI2NTYzNTE0NTAzMDQyMjIzMzgyIiwicmVnaW9uX2VkZ2UiOiJzZWEiLCJyZWdpb25fcmVuZGVyIjoiaWFkIn0=" data-pjax-transient="true" /><meta name="visitor-hmac" content="24f05fb7d8df4c9d23274763804a6dae3248264d215f6816cdf28da5e01fd259" data-pjax-transient="true" />
 
     <meta name="hovercard-subject-tag" content="repository:220714260" data-pjax-transient>
 
@@ -110,7 +110,7 @@
 
       <meta name="expected-hostname" content="github.com">
 
-      <meta name="js-proxy-site-detection-payload" content="NjgwNzEwMTkwNDFjMGQ1ZGRkODU4NjI5MDM3ODI3ZDA2MjA0NzRiYjA0NDc1ZTc4ZjEyODg0ZGFjYTI4Zjc1YXx7InJlbW90ZV9hZGRyZXNzIjoiMjQuMjcuMTEuMTQ4IiwicmVxdWVzdF9pZCI6IkNDMkM6MjMxMTo1ODNCOUU6NUU4QjdFOjYwODIzRkQ0IiwidGltZXN0YW1wIjoxNjE5MTQ4ODM0LCJob3N0IjoiZ2l0aHViLmNvbSJ9">
+      <meta name="js-proxy-site-detection-payload" content="MDMyZTQ2MjZlMWQ0Mjk4YTg5Y2Q4MTAyNzliMTkzMTdlZmFhMGE5MDBjYWQ4MTY3NzVmZjMwNTZiMGNiNGZhYnx7InJlbW90ZV9hZGRyZXNzIjoiMjQuMjcuMTEuMTQ4IiwicmVxdWVzdF9pZCI6IkNDMkM6MjMxMTo1N0RBMUM6NUUyNEZBOjYwODIzRjc1IiwidGltZXN0YW1wIjoxNjE5MTQ4Njc1LCJob3N0IjoiZ2l0aHViLmNvbSJ9">
 
     <meta name="enabled-features" content="MARKETPLACE_PENDING_INSTALLATIONS,JS_HTTP_CACHE_HEADERS,AUTOCOMPLETE_EMOJIS_IN_MARKDOWN_EDITOR,ACTIONS_CONCURRENCY_UI">
 
@@ -124,7 +124,7 @@
 
 
 
-    <link rel="canonical" href="https://github.com/entitize/Fakeddit/blob/master/README.md" data-pjax-transient>
+    <link rel="canonical" href="https://github.com/entitize/Fakeddit/blob/master/image_downloader.py" data-pjax-transient>
 
 
   <meta name="browser-stats-url" content="https://api.github.com/_private/browser/stats">
@@ -198,7 +198,7 @@
           spellcheck="false"
           autocomplete="off"
           >
-          <input type="hidden" value="z9fiuxfXZQ5mu9+foa3J02QKvT8TpS5fSGPpd72GD9ASYC+7coJSe/8J4bgr1YE7gZR/qyqum+SbU40QUii9Og==" data-csrf="true" class="js-data-jump-to-suggestions-path-csrf" />
+          <input type="hidden" value="TuMANVN8WFLb2+FF8US+TWEloKKgNtM8mPh4Q2Puy6STVM01NilvJ0Jp32J7PPalhLtiNpk9ZodLyBwkjEB5Tg==" data-csrf="true" class="js-data-jump-to-suggestions-path-csrf" />
           <input type="hidden" class="js-site-search-type-field" name="type" >
             <img src="https://github.githubassets.com/images/search-key-slash.svg" alt="" class="mr-2 header-search-key-slash">
 
@@ -377,7 +377,7 @@
     <a class="js-selected-navigation-item Header-link d-block d-md-none py-2 py-md-3 border-top border-md-top-0 border-white-fade-15" data-ga-click="Header, click, Nav menu - item:workspaces context:user" data-selected-links="/codespaces /codespaces" href="/codespaces">
       Codespaces
 </a>
-      <a class="js-selected-navigation-item Header-link d-block d-md-none py-2 py-md-3 border-top border-md-top-0 border-white-fade-15" data-ga-click="Header, click, Nav menu - item:Sponsors" data-hydro-click="{&quot;event_type&quot;:&quot;sponsors.button_click&quot;,&quot;payload&quot;:{&quot;button&quot;:&quot;HEADER_SPONSORS_DASHBOARD&quot;,&quot;sponsorable_login&quot;:&quot;chuanqichen&quot;,&quot;originating_url&quot;:&quot;https://github.com/entitize/Fakeddit/blob/master/README.md&quot;,&quot;user_id&quot;:12649403}}" data-hydro-click-hmac="a714f27dcdb7b2925ccf1054cb51503758bd4c47f7ad4a1f043b2c2a46294fb1" data-selected-links=" /sponsors/accounts" href="/sponsors/accounts">Sponsors</a>
+      <a class="js-selected-navigation-item Header-link d-block d-md-none py-2 py-md-3 border-top border-md-top-0 border-white-fade-15" data-ga-click="Header, click, Nav menu - item:Sponsors" data-hydro-click="{&quot;event_type&quot;:&quot;sponsors.button_click&quot;,&quot;payload&quot;:{&quot;button&quot;:&quot;HEADER_SPONSORS_DASHBOARD&quot;,&quot;sponsorable_login&quot;:&quot;chuanqichen&quot;,&quot;originating_url&quot;:&quot;https://github.com/entitize/Fakeddit/blob/master/image_downloader.py&quot;,&quot;user_id&quot;:12649403}}" data-hydro-click-hmac="f233099fe1048658c596ea7936e287e00487e6652a497b0f12a07aa35069c3e8" data-selected-links=" /sponsors/accounts" href="/sponsors/accounts">Sponsors</a>
 
     <a class="Header-link d-block d-md-none mr-0 mr-md-3 py-2 py-md-3 border-top border-md-top-0 border-white-fade-15" href="/settings/profile">
       Settings
@@ -386,7 +386,7 @@
       <img class="avatar avatar-user" src="https://avatars.githubusercontent.com/u/12649403?s=40&amp;v=4" width="20" height="20" alt="@chuanqichen" />
       chuanqichen
 </a>
-    <!-- '"` --><!-- </textarea></xmp> --></option></form><form action="/logout" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="8UQgp2qxRTjyBXYCAWjvqx91138FTB2EWOfF3tfJ+SMeEugO+Zv3jaLEsRHk2Zd1HZ0x7LVFtqcuCbwu6enAlA==" />
+    <!-- '"` --><!-- </textarea></xmp> --></option></form><form action="/logout" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="VNjWt4hs+XFFqfoZBVFbev+9yMTz5pkOpGT46vH5eDy7jh4eG0ZLxBVoPQrg4COk/VUuV0PvMi3SioEaz9lBiw==" />
       <button type="submit" class="Header-link mr-0 mr-md-3 py-2 py-md-3 border-top border-md-top-0 border-white-fade-15 d-md-none btn-link d-block width-full text-left" data-ga-click="Header, sign out, icon:logout" style="padding-left: 2px;">
         <svg class="octicon octicon-sign-out v-align-middle" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M2 2.75C2 1.784 2.784 1 3.75 1h2.5a.75.75 0 010 1.5h-2.5a.25.25 0 00-.25.25v10.5c0 .138.112.25.25.25h2.5a.75.75 0 010 1.5h-2.5A1.75 1.75 0 012 13.25V2.75zm10.44 4.5H6.75a.75.75 0 000 1.5h5.69l-1.97 1.97a.75.75 0 101.06 1.06l3.25-3.25a.75.75 0 000-1.06l-3.25-3.25a.75.75 0 10-1.06 1.06l1.97 1.97z"></path></svg>
         Sign out
@@ -410,7 +410,7 @@
       <notification-indicator
         class="js-socket-channel"
         data-test-selector="notifications-indicator"
-        data-channel="eyJjIjoibm90aWZpY2F0aW9uLWNoYW5nZWQ6MTI2NDk0MDMiLCJ0IjoxNjE5MTQ4ODM0fQ==--87dcd4571b28f9db3fea92922d2b6b4b62021bc8a2f2be1a10f094ffea7c8f46">
+        data-channel="eyJjIjoibm90aWZpY2F0aW9uLWNoYW5nZWQ6MTI2NDk0MDMiLCJ0IjoxNjE5MTQ4Njc1fQ==--9ac8162b34939a7e8a7bfbec1e67eab1b278f896e183933477037171e8df7295">
         <a href="/notifications"
           class="Header-link notification-indicator position-relative tooltipped tooltipped-sw"
           
@@ -496,7 +496,7 @@
 
     </div>
         <div class="Header-item position-relative m-0 js-notice js-header-color-modes-promo" hidden>
-      <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="js-notice-dismiss" action="/settings/dismiss-notice/header_color_modes_banner_ga" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="ffhpRVfCFgoEs1+sDngKvPkXUL5JxWXf0oeqK0fuMatnyOrhX+02+v/3239sxxpr2mZypE7RrwZoUyFdKI7e1A==" />
+      <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="js-notice-dismiss" action="/settings/dismiss-notice/header_color_modes_banner_ga" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="4kW1CQUYcBZTKFz7lwDksBriJEImZfu5YzKPuC1fXy74dTatDTdQ5qhs2Cj1v/RnOZMGWCFxMWDZ5gTOQj+wUQ==" />
         <div class="Popover right-0 top-0 mt-4">
           <div class="Popover-message Popover-message--top-right text-left p-4 mt-3 Box color-shadow-large" style="width: 300px;">
             <h3 class="h4 color-text-primary d-flex flex-items-center">
@@ -601,7 +601,7 @@
         data-action="toggle:notifications-list-subscription-form#detailsToggled"
       >
 
-      <summary class="btn btn-sm rounded-right-0" data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;WATCH_BUTTON&quot;,&quot;repository_id&quot;:220714260,&quot;originating_url&quot;:&quot;https://github.com/entitize/Fakeddit/blob/master/README.md&quot;,&quot;user_id&quot;:12649403}}" data-hydro-click-hmac="43ce06b4e55f106fc388cbd722b58689138214f99600def3fa201bc021ce0e42" data-ga-click="Repository, click Watch settings, action:blob#show" aria-label="Notifications settings">
+      <summary class="btn btn-sm rounded-right-0" data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;WATCH_BUTTON&quot;,&quot;repository_id&quot;:220714260,&quot;originating_url&quot;:&quot;https://github.com/entitize/Fakeddit/blob/master/image_downloader.py&quot;,&quot;user_id&quot;:12649403}}" data-hydro-click-hmac="df5d2d372e5c51fb5563a28585a0597e8231b146f88cfb849dd00324ea4cf944" data-ga-click="Repository, click Watch settings, action:blob#show" aria-label="Notifications settings">
           <span data-menu-button>
             <span
               hidden
@@ -645,7 +645,7 @@
             </header>
 
             <div class="SelectMenu-list">
-              <form data-target="notifications-list-subscription-form.form" data-action="submit:notifications-list-subscription-form#submitForm" action="/notifications/subscribe" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="OZM5o3T1W2ENVc+RVwnoFVQPKBapkxyxIV2opOXWZLTyTsPSy7hq44wknsd7poonlOvy21XNY9cXrfyGp67VgQ==" />
+              <form data-target="notifications-list-subscription-form.form" data-action="submit:notifications-list-subscription-form#submitForm" action="/notifications/subscribe" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="DQbC8t7q1/Ud4lWmDbjUTCEfd4zE4d2pbfi/igeKUZ3G2ziDYafmd5yTBPAhF7Z+4futQTi/os9bCOuoRfLgqA==" />
 
                 <input type="hidden" name="repository_id" value="220714260">
 
@@ -747,7 +747,7 @@
 
         <details-dialog class="notifications-component-dialog " data-target="notifications-list-subscription-form.customDialog" hidden>
           <div class="SelectMenu-modal notifications-component-dialog-modal overflow-visible">
-            <form data-target="notifications-list-subscription-form.customform" data-action="submit:notifications-list-subscription-form#submitCustomForm" action="/notifications/subscribe" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="hi9xe+gwhusEbNFAn8OsLGFxBWyDQPQyTjfcKHXSNkRN8osKV323aYUdgBazbM4eoZXfoX8ei1R4x4gKN6qHcQ==" />
+            <form data-target="notifications-list-subscription-form.customform" data-action="submit:notifications-list-subscription-form#submitCustomForm" action="/notifications/subscribe" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="gj2qARUsRzPgpp9m7rLb84CptuilziSb/VYXUuKiWp9J4FBwqmF2sWHXzjDCHbnBQE1sJVmQW/3LpkNwoNrrqg==" />
 
               <input type="hidden" name="repository_id" value="220714260">
 
@@ -885,9 +885,9 @@
 
   <li>
         <div class="d-block js-toggler-container js-social-container starring-container ">
-    <form class="starred js-social-form" action="/entitize/Fakeddit/unstar" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="foVPlyjmnSNXkcmY4xoOMHtFLQetRK+vPXG3+nM5YWcsDEHU3aIFwyDvHzzhxDch6pukYtzQUKXLM2m/AAo14g==" />
+    <form class="starred js-social-form" action="/entitize/Fakeddit/unstar" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="6LNzdlazyIkcPwLdXcVaMeTivfTGZeMVNtHJzxLHlCW6On01o/dQaWtB1HlfG2MgdTw0kbfxHB/AkxeKYfTAoA==" />
       <input type="hidden" name="context" value="repository">
-      <button type="submit" class="btn btn-sm btn-with-count  js-toggler-target" aria-label="Unstar this repository" title="Unstar entitize/Fakeddit" data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;UNSTAR_BUTTON&quot;,&quot;repository_id&quot;:220714260,&quot;originating_url&quot;:&quot;https://github.com/entitize/Fakeddit/blob/master/README.md&quot;,&quot;user_id&quot;:12649403}}" data-hydro-click-hmac="0d58215af5a77b01d05ea566933e5e732440172a9758bb57f8404c02037a2a8c" data-ga-click="Repository, click unstar button, action:blob#show; text:Unstar">        <svg class="octicon octicon-star-fill mr-1" height="16" viewBox="0 0 16 16" version="1.1" width="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"></path></svg>
+      <button type="submit" class="btn btn-sm btn-with-count  js-toggler-target" aria-label="Unstar this repository" title="Unstar entitize/Fakeddit" data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;UNSTAR_BUTTON&quot;,&quot;repository_id&quot;:220714260,&quot;originating_url&quot;:&quot;https://github.com/entitize/Fakeddit/blob/master/image_downloader.py&quot;,&quot;user_id&quot;:12649403}}" data-hydro-click-hmac="423c0b9fae0e83ba69f5d6f106c01939b04942244e64c38333b90a9703c81940" data-ga-click="Repository, click unstar button, action:blob#show; text:Unstar">        <svg class="octicon octicon-star-fill mr-1" height="16" viewBox="0 0 16 16" version="1.1" width="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"></path></svg>
         <span>
           Unstar
 </span></button>        <a class="social-count js-social-count" href="/entitize/Fakeddit/stargazers"
@@ -895,9 +895,9 @@
            57
         </a>
 </form>
-    <form class="unstarred js-social-form" action="/entitize/Fakeddit/star" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="mzEZxcQWg0lSgf8Nj7SiQXjugZ1AzQNjRVbhyGlcqhmRumnWGA27fVuT0sF+Kciy3hWrpVXfsEg5w+BcMoNXLw==" />
+    <form class="unstarred js-social-form" action="/entitize/Fakeddit/star" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="mejzn4/npfyQC6PqYt6EP8jawRiVewvVFCxLUTypdluTY4OMU/ydyJkZjiaTQ+7MbiHrIIBpuP5ouUrFZ3aLbQ==" />
       <input type="hidden" name="context" value="repository">
-      <button type="submit" class="btn btn-sm btn-with-count  js-toggler-target" aria-label="Unstar this repository" title="Star entitize/Fakeddit" data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;STAR_BUTTON&quot;,&quot;repository_id&quot;:220714260,&quot;originating_url&quot;:&quot;https://github.com/entitize/Fakeddit/blob/master/README.md&quot;,&quot;user_id&quot;:12649403}}" data-hydro-click-hmac="dc759a8254cbc54665897fff151a7c4809421fde126f4df23c3724cd37e9c1fe" data-ga-click="Repository, click star button, action:blob#show; text:Star">        <svg class="octicon octicon-star mr-1" height="16" viewBox="0 0 16 16" version="1.1" width="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25zm0 2.445L6.615 5.5a.75.75 0 01-.564.41l-3.097.45 2.24 2.184a.75.75 0 01.216.664l-.528 3.084 2.769-1.456a.75.75 0 01.698 0l2.77 1.456-.53-3.084a.75.75 0 01.216-.664l2.24-2.183-3.096-.45a.75.75 0 01-.564-.41L8 2.694v.001z"></path></svg>
+      <button type="submit" class="btn btn-sm btn-with-count  js-toggler-target" aria-label="Unstar this repository" title="Star entitize/Fakeddit" data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;STAR_BUTTON&quot;,&quot;repository_id&quot;:220714260,&quot;originating_url&quot;:&quot;https://github.com/entitize/Fakeddit/blob/master/image_downloader.py&quot;,&quot;user_id&quot;:12649403}}" data-hydro-click-hmac="d7c0e198c1e98333222314901ae8dd3faf741312185294dcec58f685165b3ae0" data-ga-click="Repository, click star button, action:blob#show; text:Star">        <svg class="octicon octicon-star mr-1" height="16" viewBox="0 0 16 16" version="1.1" width="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25zm0 2.445L6.615 5.5a.75.75 0 01-.564.41l-3.097.45 2.24 2.184a.75.75 0 01.216.664l-.528 3.084 2.769-1.456a.75.75 0 01.698 0l2.77 1.456-.53-3.084a.75.75 0 01.216-.664l2.24-2.183-3.096-.45a.75.75 0 01-.564-.41L8 2.694v.001z"></path></svg>
         <span>
           Star
 </span></button>        <a class="social-count js-social-count" href="/entitize/Fakeddit/stargazers"
@@ -914,7 +914,7 @@
                       <summary
                     class="btn btn-sm btn-with-count"
                     title="Fork your own copy of entitize/Fakeddit to your account"
-                    data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;FORK_BUTTON&quot;,&quot;repository_id&quot;:220714260,&quot;originating_url&quot;:&quot;https://github.com/entitize/Fakeddit/blob/master/README.md&quot;,&quot;user_id&quot;:12649403}}" data-hydro-click-hmac="f388194d915a679c2163c95230642774a7ee3e9e21039b0d29c55e550ba13938" data-ga-click="Repository, show fork modal, action:blob#show; text:Fork">
+                    data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;FORK_BUTTON&quot;,&quot;repository_id&quot;:220714260,&quot;originating_url&quot;:&quot;https://github.com/entitize/Fakeddit/blob/master/image_downloader.py&quot;,&quot;user_id&quot;:12649403}}" data-hydro-click-hmac="a68876018326aa2585c78ee71b4d6d0b34d3366b9fed5b745d3d99e44b22e513" data-ga-click="Repository, show fork modal, action:blob#show; text:Fork">
                     <svg class="octicon octicon-repo-forked" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M5 3.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm0 2.122a2.25 2.25 0 10-1.5 0v.878A2.25 2.25 0 005.75 8.5h1.5v2.128a2.251 2.251 0 101.5 0V8.5h1.5a2.25 2.25 0 002.25-2.25v-.878a2.25 2.25 0 10-1.5 0v.878a.75.75 0 01-.75.75h-4.5A.75.75 0 015 6.25v-.878zm3.75 7.378a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm3-8.75a.75.75 0 100-1.5.75.75 0 000 1.5z"></path></svg>
                     Fork
                   </summary>
@@ -1089,9 +1089,9 @@
   
 
 
-    <a class="d-none js-permalink-shortcut" data-hotkey="y" href="/entitize/Fakeddit/blob/bd05ca4f790d7eedeb84d3f3555f5a1eb91ed917/README.md">Permalink</a>
+    <a class="d-none js-permalink-shortcut" data-hotkey="y" href="/entitize/Fakeddit/blob/bd05ca4f790d7eedeb84d3f3555f5a1eb91ed917/image_downloader.py">Permalink</a>
 
-    <!-- blob contrib key: blob_contributors:v22:f8ad9e9b896a371561ec3b732e52bb7c4662a08b8213910a54949b3b9ede6e2e -->
+    <!-- blob contrib key: blob_contributors:v22:b5fb03d95de0149877a04ec49446bfd9994776903656c486b1ad00fa07d94ad7 -->
 
     <div class="d-flex flex-items-start flex-shrink-0 pb-3 flex-wrap flex-md-nowrap flex-justify-between flex-md-justify-start">
       
@@ -1167,7 +1167,7 @@
             </div>
 
               <template data-target="ref-selector.itemTemplate">
-  <a href="https://github.com/entitize/Fakeddit/blob/{{ urlEncodedRefName }}/README.md" class="SelectMenu-item" role="menuitemradio" rel="nofollow" aria-checked="{{ isCurrent }}" data-index="{{ index }}">
+  <a href="https://github.com/entitize/Fakeddit/blob/{{ urlEncodedRefName }}/image_downloader.py" class="SelectMenu-item" role="menuitemradio" rel="nofollow" aria-checked="{{ isCurrent }}" data-index="{{ index }}">
     <svg class="octicon octicon-check SelectMenu-icon SelectMenu-icon--check" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path></svg>
     <span class="flex-1 css-truncate css-truncate-overflow {{ isFilteringClass }}">{{ refName }}</span>
     <span hidden="{{ isNotDefault }}" class="Label Label--secondary flex-self-start">default</span>
@@ -1201,7 +1201,7 @@
             </template>
 
               <template data-target="ref-selector.itemTemplate">
-  <a href="https://github.com/entitize/Fakeddit/blob/{{ urlEncodedRefName }}/README.md" class="SelectMenu-item" role="menuitemradio" rel="nofollow" aria-checked="{{ isCurrent }}" data-index="{{ index }}">
+  <a href="https://github.com/entitize/Fakeddit/blob/{{ urlEncodedRefName }}/image_downloader.py" class="SelectMenu-item" role="menuitemradio" rel="nofollow" aria-checked="{{ isCurrent }}" data-index="{{ index }}">
     <svg class="octicon octicon-check SelectMenu-icon SelectMenu-icon--check" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path></svg>
     <span class="flex-1 css-truncate css-truncate-overflow {{ isFilteringClass }}">{{ refName }}</span>
     <span hidden="{{ isNotDefault }}" class="Label Label--secondary flex-self-start">default</span>
@@ -1230,7 +1230,46 @@
 </div>
 
       <h2 id="blob-path" class="breadcrumb flex-auto flex-self-center min-width-0 text-normal mx-2 width-full width-md-auto flex-order-1 flex-md-order-none mt-3 mt-md-0">
-        <span class="js-repo-root text-bold"><span class="js-path-segment d-inline-block wb-break-all"><a data-pjax="true" href="/entitize/Fakeddit"><span>Fakeddit</span></a></span></span><span class="separator">/</span><strong class="final-path">README.md</strong>
+        <span class="js-repo-root text-bold"><span class="js-path-segment d-inline-block wb-break-all"><a data-pjax="true" href="/entitize/Fakeddit"><span>Fakeddit</span></a></span></span><span class="separator">/</span><strong class="final-path">image_downloader.py</strong>
+          <span class="separator">/</span><details class="details-reset details-overlay d-inline" id="jumpto-symbol-select-menu">
+  <summary class="btn-link Link--secondary css-truncate" aria-haspopup="true" data-hotkey="r" data-hydro-click="{&quot;event_type&quot;:&quot;code_navigation.click_on_blob_definitions&quot;,&quot;payload&quot;:{&quot;action&quot;:&quot;click_on_blob_definitions&quot;,&quot;repository_id&quot;:220714260,&quot;ref&quot;:&quot;master&quot;,&quot;language&quot;:&quot;Python&quot;,&quot;originating_url&quot;:&quot;https://github.com/entitize/Fakeddit/blob/master/image_downloader.py&quot;,&quot;user_id&quot;:12649403}}" data-hydro-click-hmac="bc1ca7f8d30bb574204fbb822e70e30495ae5298a35a2c03badd7b5e32f8412b">
+      <svg class="octicon octicon-code" height="16" viewBox="0 0 16 16" version="1.1" width="16" aria-hidden="true"><path fill-rule="evenodd" d="M4.72 3.22a.75.75 0 011.06 1.06L2.06 8l3.72 3.72a.75.75 0 11-1.06 1.06L.47 8.53a.75.75 0 010-1.06l4.25-4.25zm6.56 0a.75.75 0 10-1.06 1.06L13.94 8l-3.72 3.72a.75.75 0 101.06 1.06l4.25-4.25a.75.75 0 000-1.06l-4.25-4.25z"></path></svg>
+    <span data-menu-button>Jump to</span>
+    <span class="dropdown-caret"></span>
+  </summary>
+  <details-menu class="SelectMenu SelectMenu--hasFilter" role="menu">
+    <div class="SelectMenu-modal">
+      <header class="SelectMenu-header">
+        <span class="SelectMenu-title">Code definitions</span>
+        <button class="SelectMenu-closeButton" type="button" data-toggle-for="jumpto-symbol-select-menu">
+          <svg aria-label="Close menu" class="octicon octicon-x" viewBox="0 0 16 16" version="1.1" width="16" height="16" role="img"><path fill-rule="evenodd" d="M3.72 3.72a.75.75 0 011.06 0L8 6.94l3.22-3.22a.75.75 0 111.06 1.06L9.06 8l3.22 3.22a.75.75 0 11-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 01-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 010-1.06z"></path></svg>
+        </button>
+      </header>
+        <div class="SelectMenu-filter">
+          <input
+            class="SelectMenu-input form-control js-filterable-field"
+            id="jumpto-symbols-filter-field"
+            type="text"
+            autocomplete="off"
+            spellcheck="false"
+            autofocus
+            placeholder="Filter definitions"
+            aria-label="Filter definitions">
+        </div>
+      <div class="SelectMenu-list">
+        <div data-filterable-for="jumpto-symbols-filter-field" data-filterable-type="substring">
+        </div>
+      </div>
+      <footer class="SelectMenu-footer">
+        <div class="d-flex flex-justify-between">
+          Code navigation index up-to-date
+          <svg class="octicon octicon-dot-fill text-green" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8z"></path></svg>
+        </div>
+      </footer>
+    </div>
+  </details-menu>
+</details>
+
       </h2>
       <a href="/entitize/Fakeddit/find/master"
             class="js-pjax-capture-input btn mr-2 d-none d-md-block"
@@ -1244,7 +1283,7 @@
 </summary>
   <div>          <ul class="dropdown-menu dropdown-menu-sw">
             <li class="d-block d-md-none">
-              <a class="dropdown-item d-flex flex-items-baseline" data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;FIND_FILE_BUTTON&quot;,&quot;repository_id&quot;:220714260,&quot;originating_url&quot;:&quot;https://github.com/entitize/Fakeddit/blob/master/README.md&quot;,&quot;user_id&quot;:12649403}}" data-hydro-click-hmac="c6103d13e5ed7a338eddc0bd96539f48572a7f6a07dcbafefeccb835206a3830" data-ga-click="Repository, find file, location:repo overview" data-hotkey="t" data-pjax="true" href="/entitize/Fakeddit/find/master">
+              <a class="dropdown-item d-flex flex-items-baseline" data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;FIND_FILE_BUTTON&quot;,&quot;repository_id&quot;:220714260,&quot;originating_url&quot;:&quot;https://github.com/entitize/Fakeddit/blob/master/image_downloader.py&quot;,&quot;user_id&quot;:12649403}}" data-hydro-click-hmac="6cbab4e09af65d7038892cbeaab2dac926cc5bfb87f2811feddb593c4e2a6070" data-ga-click="Repository, find file, location:repo overview" data-hotkey="t" data-pjax="true" href="/entitize/Fakeddit/find/master">
                 <span class="flex-auto">Go to file</span>
                 <span class="text-small color-text-secondary" aria-hidden="true">T</span>
 </a>            </li>
@@ -1256,14 +1295,22 @@
                 </span>
               </button>
             </li>
+            <li data-toggle-for="blob-more-options-details">
+              <button type="button" data-toggle-for="jumpto-symbol-select-menu" class="btn-link dropdown-item">
+                <span class="d-flex flex-items-baseline">
+                  <span class="flex-auto">Go to definition</span>
+                  <span class="text-small color-text-secondary" aria-hidden="true">R</span>
+                </span>
+              </button>
+            </li>
             <li class="dropdown-divider" role="none"></li>
             <li>
-              <clipboard-copy value="README.md" class="dropdown-item cursor-pointer" data-toggle-for="blob-more-options-details">
+              <clipboard-copy value="image_downloader.py" class="dropdown-item cursor-pointer" data-toggle-for="blob-more-options-details">
                 Copy path
               </clipboard-copy>
             </li>
             <li>
-              <clipboard-copy value="https://github.com/entitize/Fakeddit/blob/bd05ca4f790d7eedeb84d3f3555f5a1eb91ed917/README.md" class="dropdown-item cursor-pointer" data-toggle-for="blob-more-options-details" >
+              <clipboard-copy value="https://github.com/entitize/Fakeddit/blob/bd05ca4f790d7eedeb84d3f3555f5a1eb91ed917/image_downloader.py" class="dropdown-item cursor-pointer" data-toggle-for="blob-more-options-details" >
                 <span class="d-flex flex-items-baseline">
                   <span class="flex-auto">Copy permalink</span>
                 </span>
@@ -1276,7 +1323,7 @@
 
 
     <div class="Box d-flex flex-column flex-shrink-0 mb-3">
-      <include-fragment src="/entitize/Fakeddit/contributors/master/README.md" class="commit-loader">
+      <include-fragment src="/entitize/Fakeddit/contributors/master/image_downloader.py" class="commit-loader">
         <div class="Box-header Box-header--blue d-flex flex-items-center">
           <div class="Skeleton avatar avatar-user flex-shrink-0 ml-n1 mr-n1 mt-n1 mb-n1" style="width:24px;height:24px;"></div>
           <div class="Skeleton Skeleton--text col-5 ml-2">&nbsp;</div>
@@ -1299,76 +1346,46 @@
 
 
 
-    <readme-toc>
-
+  
     <div data-target="readme-toc.content" class="Box mt-3 position-relative
     ">
       
   <div
-    class="Box-header blob-header js-sticky js-position-sticky top-0 p-2 d-flex flex-shrink-0 flex-md-row flex-items-center"
-    style="position: sticky; z-index: 1;"
+    class="Box-header py-2 pr-2 d-flex flex-shrink-0 flex-md-row flex-items-center"
+    
   >
-
-      <details
-  data-target="readme-toc.trigger"
-  data-menu-hydro-click="{&quot;event_type&quot;:&quot;repository_toc_menu.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;trigger&quot;,&quot;repository_id&quot;:220714260,&quot;originating_url&quot;:&quot;https://github.com/entitize/Fakeddit/blob/master/README.md&quot;,&quot;user_id&quot;:12649403}}"
-  data-menu-hydro-click-hmac="46b58dd63fc3048e2817a950a95045100de04f3abec07f8bc089cd440174c24d"
-  class="dropdown details-reset details-overlay"
->
-  <summary
-    class="btn btn-octicon m-0 box-shadow-none mr-2 p-2"
-    aria-haspopup="true"
-    aria-label="Table of Contents">
-    <svg height="16" class="octicon octicon-list-unordered" viewBox="0 0 16 16" version="1.1" width="16" aria-hidden="true"><path fill-rule="evenodd" d="M2 4a1 1 0 100-2 1 1 0 000 2zm3.75-1.5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zm0 5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zm0 5a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zM3 8a1 1 0 11-2 0 1 1 0 012 0zm-1 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
-  </summary>
-
-  <details-menu class="SelectMenu" role="menu">
-    <div class="SelectMenu-modal rounded-3 mt-1" style="max-height:340px;">
-      <div class="SelectMenu-list SelectMenu-list--borderless p-2" style="overscroll-behavior: contain;">
-
-          <a role="menuitem" class="filter-item py-1 text-emphasized" style="padding-left: 12px;" data-action="click:readme-toc#blur" data-targets="readme-toc.entries" data-hydro-click="{&quot;event_type&quot;:&quot;repository_toc_menu.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;entry&quot;,&quot;repository_id&quot;:220714260,&quot;originating_url&quot;:&quot;https://github.com/entitize/Fakeddit/blob/master/README.md&quot;,&quot;user_id&quot;:12649403}}" data-hydro-click-hmac="20be4a261e6370dbfede9c5486c55c61a7798137f613dd0f7de2ae3b1d287a68" href="#fakeddit">Fakeddit</a>
-          <a role="menuitem" class="filter-item py-1 " style="padding-left: 24px;" data-action="click:readme-toc#blur" data-targets="readme-toc.entries" data-hydro-click="{&quot;event_type&quot;:&quot;repository_toc_menu.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;entry&quot;,&quot;repository_id&quot;:220714260,&quot;originating_url&quot;:&quot;https://github.com/entitize/Fakeddit/blob/master/README.md&quot;,&quot;user_id&quot;:12649403}}" data-hydro-click-hmac="20be4a261e6370dbfede9c5486c55c61a7798137f613dd0f7de2ae3b1d287a68" href="#getting-started">Getting Started</a>
-          <a role="menuitem" class="filter-item py-1 " style="padding-left: 36px;" data-action="click:readme-toc#blur" data-targets="readme-toc.entries" data-hydro-click="{&quot;event_type&quot;:&quot;repository_toc_menu.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;entry&quot;,&quot;repository_id&quot;:220714260,&quot;originating_url&quot;:&quot;https://github.com/entitize/Fakeddit/blob/master/README.md&quot;,&quot;user_id&quot;:12649403}}" data-hydro-click-hmac="20be4a261e6370dbfede9c5486c55c61a7798137f613dd0f7de2ae3b1d287a68" href="#installation">Installation</a>
-          <a role="menuitem" class="filter-item py-1 " style="padding-left: 48px;" data-action="click:readme-toc#blur" data-targets="readme-toc.entries" data-hydro-click="{&quot;event_type&quot;:&quot;repository_toc_menu.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;entry&quot;,&quot;repository_id&quot;:220714260,&quot;originating_url&quot;:&quot;https://github.com/entitize/Fakeddit/blob/master/README.md&quot;,&quot;user_id&quot;:12649403}}" data-hydro-click-hmac="20be4a261e6370dbfede9c5486c55c61a7798137f613dd0f7de2ae3b1d287a68" href="#download-text-and-metadata">Download text and metadata</a>
-          <a role="menuitem" class="filter-item py-1 " style="padding-left: 48px;" data-action="click:readme-toc#blur" data-targets="readme-toc.entries" data-hydro-click="{&quot;event_type&quot;:&quot;repository_toc_menu.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;entry&quot;,&quot;repository_id&quot;:220714260,&quot;originating_url&quot;:&quot;https://github.com/entitize/Fakeddit/blob/master/README.md&quot;,&quot;user_id&quot;:12649403}}" data-hydro-click-hmac="20be4a261e6370dbfede9c5486c55c61a7798137f613dd0f7de2ae3b1d287a68" href="#download-image-data">Download image data</a>
-          <a role="menuitem" class="filter-item py-1 " style="padding-left: 48px;" data-action="click:readme-toc#blur" data-targets="readme-toc.entries" data-hydro-click="{&quot;event_type&quot;:&quot;repository_toc_menu.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;entry&quot;,&quot;repository_id&quot;:220714260,&quot;originating_url&quot;:&quot;https://github.com/entitize/Fakeddit/blob/master/README.md&quot;,&quot;user_id&quot;:12649403}}" data-hydro-click-hmac="20be4a261e6370dbfede9c5486c55c61a7798137f613dd0f7de2ae3b1d287a68" href="#download-comment-data">Download comment data</a>
-          <a role="menuitem" class="filter-item py-1 " style="padding-left: 36px;" data-action="click:readme-toc#blur" data-targets="readme-toc.entries" data-hydro-click="{&quot;event_type&quot;:&quot;repository_toc_menu.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;entry&quot;,&quot;repository_id&quot;:220714260,&quot;originating_url&quot;:&quot;https://github.com/entitize/Fakeddit/blob/master/README.md&quot;,&quot;user_id&quot;:12649403}}" data-hydro-click-hmac="20be4a261e6370dbfede9c5486c55c61a7798137f613dd0f7de2ae3b1d287a68" href="#usage">Usage</a>
-      </div>
-    </div>
-  </details-menu>
-</details>
 
 
   <div class="text-mono f6 flex-auto pr-3 flex-order-2 flex-md-order-1">
 
-      65 lines (38 sloc)
+      28 lines (22 sloc)
       <span class="file-info-divider"></span>
-    2.67 KB
+    756 Bytes
   </div>
 
   <div class="d-flex py-1 py-md-0 flex-auto flex-order-1 flex-md-order-2 flex-sm-grow-0 flex-justify-between hide-sm hide-md">
 
     <div class="BtnGroup">
-      <a href="/entitize/Fakeddit/raw/master/README.md" id="raw-url" role="button" class="btn-sm btn BtnGroup-item ">Raw</a>
-        <a href="/entitize/Fakeddit/blame/master/README.md" data-hotkey="b" role="button" class="js-update-url-with-hash btn-sm btn BtnGroup-item ">Blame</a>
+      <a href="/entitize/Fakeddit/raw/master/image_downloader.py" id="raw-url" role="button" class="btn-sm btn BtnGroup-item ">Raw</a>
+        <a href="/entitize/Fakeddit/blame/master/image_downloader.py" data-hotkey="b" role="button" class="js-update-url-with-hash btn-sm btn BtnGroup-item ">Blame</a>
     </div>
 
     <div>
           <a class="btn-octicon tooltipped tooltipped-nw js-remove-unless-platform"
              data-platforms="windows,mac"
-             href="x-github-client://openRepo/https://github.com/entitize/Fakeddit?branch=master&amp;filepath=README.md"
+             href="x-github-client://openRepo/https://github.com/entitize/Fakeddit?branch=master&amp;filepath=image_downloader.py"
              aria-label="Open this file in GitHub Desktop"
              data-ga-click="Repository, open with desktop">
               <svg class="octicon octicon-device-desktop" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M1.75 2.5h12.5a.25.25 0 01.25.25v7.5a.25.25 0 01-.25.25H1.75a.25.25 0 01-.25-.25v-7.5a.25.25 0 01.25-.25zM14.25 1H1.75A1.75 1.75 0 000 2.75v7.5C0 11.216.784 12 1.75 12h3.727c-.1 1.041-.52 1.872-1.292 2.757A.75.75 0 004.75 16h6.5a.75.75 0 00.565-1.243c-.772-.885-1.193-1.716-1.292-2.757h3.727A1.75 1.75 0 0016 10.25v-7.5A1.75 1.75 0 0014.25 1zM9.018 12H6.982a5.72 5.72 0 01-.765 2.5h3.566a5.72 5.72 0 01-.765-2.5z"></path></svg>
           </a>
 
-          <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="inline-form js-update-url-with-hash" action="/entitize/Fakeddit/edit/master/README.md" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="sOmjZO5yvgm71t5+M06mZk+yiPfY9HtRN7keQLEbe9SmVBU8pAAVnjcN9znT03j5iDpJrZopwZ9jy1Q0atvagQ==" />
+          <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="inline-form js-update-url-with-hash" action="/entitize/Fakeddit/edit/master/image_downloader.py" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="iZCTxQ7v/btxVTXX03ht4DAdUJW7jjXD3mqfJpbpw1SbQ4khT6tQa888LhjaFTAavZlWmMOnJuJyxtdzyNoc3A==" />
             <button class="btn-octicon tooltipped tooltipped-nw" type="submit"
               aria-label="Fork this project and edit the file" data-hotkey="e" data-disable-with>
               <svg class="octicon octicon-pencil" height="16" viewBox="0 0 16 16" version="1.1" width="16" aria-hidden="true"><path fill-rule="evenodd" d="M11.013 1.427a1.75 1.75 0 012.474 0l1.086 1.086a1.75 1.75 0 010 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 01-.927-.928l.929-3.25a1.75 1.75 0 01.445-.758l8.61-8.61zm1.414 1.06a.25.25 0 00-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 000-.354l-1.086-1.086zM11.189 6.25L9.75 4.81l-6.286 6.287a.25.25 0 00-.064.108l-.558 1.953 1.953-.558a.249.249 0 00.108-.064l6.286-6.286z"></path></svg>
             </button>
 </form>
-          <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="inline-form" action="/entitize/Fakeddit/delete/master/README.md" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="2deCKBLaJ0DwTTG5IQdQpdksGSOLRhLRWCZ16sZjxI+k7ypFNN9Gg3MBmFS8ajDQnyCCCBeh/SaXjbqnC8wjug==" />
+          <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="inline-form" action="/entitize/Fakeddit/delete/master/image_downloader.py" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="LFK1/rxZWVafz+6dxxFbfP5tAOEFX4P9fUSzFh0gVBeixSDR2MwrxiQDyl6ZEr98ws+DXrXMcCdoLsi6/b9HBw==" />
             <button class="btn-octicon btn-octicon-danger tooltipped tooltipped-nw" type="submit"
               aria-label="Fork this project and delete the file" data-disable-with>
               <svg class="octicon octicon-trash" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M6.5 1.75a.25.25 0 01.25-.25h2.5a.25.25 0 01.25.25V3h-3V1.75zm4.5 0V3h2.25a.75.75 0 010 1.5H2.75a.75.75 0 010-1.5H5V1.75C5 .784 5.784 0 6.75 0h2.5C10.216 0 11 .784 11 1.75zM4.496 6.675a.75.75 0 10-1.492.15l.66 6.6A1.75 1.75 0 005.405 15h5.19c.9 0 1.652-.681 1.741-1.576l.66-6.6a.75.75 0 00-1.492-.149l-.66 6.6a.25.25 0 01-.249.225h-5.19a.25.25 0 01-.249-.225l-.66-6.6z"></path></svg>
@@ -1378,7 +1395,7 @@
 
     <div class="d-flex hide-lg hide-xl flex-order-2 flex-grow-0">
       <details class="dropdown details-reset details-overlay d-inline-block">
-        <summary class="btn-octicon p-2" aria-haspopup="true" aria-label="possible actions">
+        <summary class="btn-octicon" aria-haspopup="true" aria-label="possible actions">
           <svg height="16" class="octicon octicon-kebab-horizontal" viewBox="0 0 16 16" version="1.1" width="16" aria-hidden="true"><path d="M8 9a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM1.5 9a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm13 0a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"></path></svg>
         </summary>
 
@@ -1386,28 +1403,28 @@
             <li>
                 <a class="dropdown-item tooltipped tooltipped-nw js-remove-unless-platform"
                    data-platforms="windows,mac"
-                   href="x-github-client://openRepo/https://github.com/entitize/Fakeddit?branch=master&amp;filepath=README.md"
+                   href="x-github-client://openRepo/https://github.com/entitize/Fakeddit?branch=master&amp;filepath=image_downloader.py"
                    data-ga-click="Repository, open with desktop">
                   Open with Desktop
                 </a>
             </li>
           <li>
-            <a class="dropdown-item" href="/entitize/Fakeddit/raw/master/README.md">
+            <a class="dropdown-item" href="/entitize/Fakeddit/raw/master/image_downloader.py">
               View raw
             </a>
           </li>
             <li>
-              <a class="dropdown-item" href="/entitize/Fakeddit/blame/master/README.md">
+              <a class="dropdown-item" href="/entitize/Fakeddit/blame/master/image_downloader.py">
                 View blame
               </a>
             </li>
 
               <li class="dropdown-divider" role="none"></li>
               <li>
-                <a class="dropdown-item" href="/entitize/Fakeddit/edit/master/README.md">Edit file</a>
+                <a class="dropdown-item" href="/entitize/Fakeddit/edit/master/image_downloader.py">Edit file</a>
               </li>
               <li>
-                <a class="dropdown-item menu-item-danger" href="/entitize/Fakeddit/delete/master/README.md">Delete file</a>
+                <a class="dropdown-item menu-item-danger" href="/entitize/Fakeddit/delete/master/image_downloader.py">Delete file</a>
               </li>
         </ul>
       </details>
@@ -1415,49 +1432,156 @@
 </div>
 
 
-        <div id="readme" class="Box-body readme blob js-code-block-container p-5 p-xl-6 gist-border-0">
-    <article class="markdown-body entry-content container-lg" itemprop="text"><h1><a id="user-content-fakeddit" class="anchor" aria-hidden="true" href="#fakeddit"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Fakeddit</h1>
-<p>Kai Nakamura, Sharon Levy, and William Yang Wang. 2020. r/Fakeddit: A New Multimodal Benchmark Dataset for Fine-grained Fake News Detection</p>
-<p>Website: <a href="https://fakeddit.netlify.app/" rel="nofollow">https://fakeddit.netlify.app/</a></p>
-<p>Codalab Competition: <a href="https://competitions.codalab.org/competitions/25337" rel="nofollow">https://competitions.codalab.org/competitions/25337</a></p>
-<p>Paper: <a href="https://arxiv.org/abs/1911.03854" rel="nofollow">https://arxiv.org/abs/1911.03854</a></p>
-<p>Our lab: <a href="http://nlp.cs.ucsb.edu/index.html" rel="nofollow">http://nlp.cs.ucsb.edu/index.html</a></p>
-<h2><a id="user-content-getting-started" class="anchor" aria-hidden="true" href="#getting-started"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Getting Started</h2>
-<p>Follow the instructions to download the dataset. You can download text, metadata, comment data, and image data.</p>
-<p>Note that released test set is public. Private test set is used for leaderboard (coming soon).</p>
-<p>Please read the <code>Usage</code> section. It is important.</p>
-<p>Please let us know if you encounter any problems by opening an issue or by directly contacting us.</p>
-<h3><a id="user-content-installation" class="anchor" aria-hidden="true" href="#installation"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Installation</h3>
-<h4><a id="user-content-download-text-and-metadata" class="anchor" aria-hidden="true" href="#download-text-and-metadata"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Download text and metadata</h4>
-<p>Please read the USAGE section before using or downloading.
-Download the v2.0 dataset from <a href="https://drive.google.com/drive/folders/1jU7qgDqU1je9Y0PMKJ_f31yXRo5uWGFm?usp=sharing" rel="nofollow">here</a></p>
-<h4><a id="user-content-download-image-data" class="anchor" aria-hidden="true" href="#download-image-data"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Download image data</h4>
-<p><strong>Option 1: (RECOMMENDED)</strong>
-Download the images <a href="https://drive.google.com/file/d/1cjY6HsHaSZuLVHywIxD5xQqng33J5S2b/view?usp=sharing" rel="nofollow">here</a>.</p>
-<p><strong>Option 2:</strong>
-The <code>*.tsv</code> dataset files have an <code>image_url</code> column which contain the image urls. You can use the URLs to download the images.</p>
-<p>For convenience, we have provided a script which will download the images for you. Please follow the instructions if you would like to use the attached script.</p>
-<p>Fork or clone this repository and install required python libraries</p>
-<pre><code>$ git clone https://github.com/entitize/Fakeddit
-$ cd Fakeddit
-$ pip install -r requirements.txt
-</code></pre>
-<p>Copy <code>image_downloader.py</code> to the same directory/folder as where you downloaded the tsv files.</p>
-<p>Run <code>image_downloader.py</code>  in the new directory/folder</p>
-<pre><code>$ python image_downloader.py file_name
-</code></pre>
-<h4><a id="user-content-download-comment-data" class="anchor" aria-hidden="true" href="#download-comment-data"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Download comment data</h4>
-<p>Download the comment data from <a href="https://drive.google.com/drive/folders/150sL4SNi5zFK8nmllv5prWbn0LyvLzvo?usp=sharing" rel="nofollow">here</a></p>
-<h3><a id="user-content-usage" class="anchor" aria-hidden="true" href="#usage"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Usage</h3>
-<p>Please note that results in the paper are based on multimodal samples only (samples that have both text and image). In our paper, only samples that have both image and text were used for the baseline experiments and error analysis. Thus, if you would like to compare against the results in the paper, use the samples in the <code>multimodal_only_samples</code> folder.</p>
-<p>If there are <code>Unnamed</code>... columns, you can ignore or get rid of them. Use the <code>clean_title</code> column to get filtered text data.</p>
-<p><code>comments.tsv</code> consists of comments made by Reddit users on submissions in the entire released dataset. Use the <code>submission_id</code> column to identify which submission the comment is associated with. Note that one submission can have zero, one, or multiple comments.</p>
-</article>
+      
+  <div itemprop="text" class="Box-body p-0 blob-wrapper data type-python  gist-border-0">
+      
+<table class="highlight tab-size js-file-line-container" data-tab-size="8" data-paste-markdown-skip>
+      <tr>
+        <td id="L1" class="blob-num js-line-number" data-line-number="1"></td>
+        <td id="LC1" class="blob-code blob-code-inner js-file-line"><span class=pl-k>import</span> <span class=pl-s1>argparse</span></td>
+      </tr>
+      <tr>
+        <td id="L2" class="blob-num js-line-number" data-line-number="2"></td>
+        <td id="LC2" class="blob-code blob-code-inner js-file-line"><span class=pl-k>import</span> <span class=pl-s1>pandas</span> <span class=pl-k>as</span> <span class=pl-s1>pd</span></td>
+      </tr>
+      <tr>
+        <td id="L3" class="blob-num js-line-number" data-line-number="3"></td>
+        <td id="LC3" class="blob-code blob-code-inner js-file-line"><span class=pl-k>import</span> <span class=pl-s1>os</span></td>
+      </tr>
+      <tr>
+        <td id="L4" class="blob-num js-line-number" data-line-number="4"></td>
+        <td id="LC4" class="blob-code blob-code-inner js-file-line"><span class=pl-k>from</span> <span class=pl-s1>tqdm</span> <span class=pl-k>import</span> <span class=pl-s1>tqdm</span> <span class=pl-k>as</span> <span class=pl-s1>tqdm</span></td>
+      </tr>
+      <tr>
+        <td id="L5" class="blob-num js-line-number" data-line-number="5"></td>
+        <td id="LC5" class="blob-code blob-code-inner js-file-line"><span class=pl-k>import</span> <span class=pl-s1>urllib</span>.<span class=pl-s1>request</span></td>
+      </tr>
+      <tr>
+        <td id="L6" class="blob-num js-line-number" data-line-number="6"></td>
+        <td id="LC6" class="blob-code blob-code-inner js-file-line"><span class=pl-k>import</span> <span class=pl-s1>numpy</span> <span class=pl-k>as</span> <span class=pl-s1>np</span></td>
+      </tr>
+      <tr>
+        <td id="L7" class="blob-num js-line-number" data-line-number="7"></td>
+        <td id="LC7" class="blob-code blob-code-inner js-file-line"><span class=pl-k>import</span> <span class=pl-s1>sys</span></td>
+      </tr>
+      <tr>
+        <td id="L8" class="blob-num js-line-number" data-line-number="8"></td>
+        <td id="LC8" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="L9" class="blob-num js-line-number" data-line-number="9"></td>
+        <td id="LC9" class="blob-code blob-code-inner js-file-line"><span class=pl-s1>parser</span> <span class=pl-c1>=</span> <span class=pl-s1>argparse</span>.<span class=pl-v>ArgumentParser</span>(<span class=pl-s1>description</span><span class=pl-c1>=</span><span class=pl-s>&#39;r/Fakeddit image downloader&#39;</span>)</td>
+      </tr>
+      <tr>
+        <td id="L10" class="blob-num js-line-number" data-line-number="10"></td>
+        <td id="LC10" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="L11" class="blob-num js-line-number" data-line-number="11"></td>
+        <td id="LC11" class="blob-code blob-code-inner js-file-line"><span class=pl-s1>parser</span>.<span class=pl-en>add_argument</span>(<span class=pl-s>&#39;type&#39;</span>, <span class=pl-s1>type</span><span class=pl-c1>=</span><span class=pl-s1>str</span>, <span class=pl-s1>help</span><span class=pl-c1>=</span><span class=pl-s>&#39;train, validate, or test&#39;</span>)</td>
+      </tr>
+      <tr>
+        <td id="L12" class="blob-num js-line-number" data-line-number="12"></td>
+        <td id="LC12" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="L13" class="blob-num js-line-number" data-line-number="13"></td>
+        <td id="LC13" class="blob-code blob-code-inner js-file-line"><span class=pl-s1>args</span> <span class=pl-c1>=</span> <span class=pl-s1>parser</span>.<span class=pl-en>parse_args</span>()</td>
+      </tr>
+      <tr>
+        <td id="L14" class="blob-num js-line-number" data-line-number="14"></td>
+        <td id="LC14" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="L15" class="blob-num js-line-number" data-line-number="15"></td>
+        <td id="LC15" class="blob-code blob-code-inner js-file-line"><span class=pl-s1>df</span> <span class=pl-c1>=</span> <span class=pl-s1>pd</span>.<span class=pl-en>read_csv</span>(<span class=pl-s1>args</span>.<span class=pl-s1>type</span>, <span class=pl-s1>sep</span><span class=pl-c1>=</span><span class=pl-s>&quot;<span class=pl-cce>\t</span>&quot;</span>)</td>
+      </tr>
+      <tr>
+        <td id="L16" class="blob-num js-line-number" data-line-number="16"></td>
+        <td id="LC16" class="blob-code blob-code-inner js-file-line"><span class=pl-s1>df</span> <span class=pl-c1>=</span> <span class=pl-s1>df</span>.<span class=pl-en>replace</span>(<span class=pl-s1>np</span>.<span class=pl-s1>nan</span>, <span class=pl-s>&#39;&#39;</span>, <span class=pl-s1>regex</span><span class=pl-c1>=</span><span class=pl-c1>True</span>)</td>
+      </tr>
+      <tr>
+        <td id="L17" class="blob-num js-line-number" data-line-number="17"></td>
+        <td id="LC17" class="blob-code blob-code-inner js-file-line"><span class=pl-s1>df</span>.<span class=pl-en>fillna</span>(<span class=pl-s>&#39;&#39;</span>, <span class=pl-s1>inplace</span><span class=pl-c1>=</span><span class=pl-c1>True</span>)</td>
+      </tr>
+      <tr>
+        <td id="L18" class="blob-num js-line-number" data-line-number="18"></td>
+        <td id="LC18" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="L19" class="blob-num js-line-number" data-line-number="19"></td>
+        <td id="LC19" class="blob-code blob-code-inner js-file-line"><span class=pl-s1>pbar</span> <span class=pl-c1>=</span> <span class=pl-en>tqdm</span>(<span class=pl-s1>total</span><span class=pl-c1>=</span><span class=pl-en>len</span>(<span class=pl-s1>df</span>))</td>
+      </tr>
+      <tr>
+        <td id="L20" class="blob-num js-line-number" data-line-number="20"></td>
+        <td id="LC20" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="L21" class="blob-num js-line-number" data-line-number="21"></td>
+        <td id="LC21" class="blob-code blob-code-inner js-file-line"><span class=pl-k>if</span> <span class=pl-c1>not</span> <span class=pl-s1>os</span>.<span class=pl-s1>path</span>.<span class=pl-en>exists</span>(<span class=pl-s>&quot;images&quot;</span>):</td>
+      </tr>
+      <tr>
+        <td id="L22" class="blob-num js-line-number" data-line-number="22"></td>
+        <td id="LC22" class="blob-code blob-code-inner js-file-line">  <span class=pl-s1>os</span>.<span class=pl-en>makedirs</span>(<span class=pl-s>&quot;images&quot;</span>)</td>
+      </tr>
+      <tr>
+        <td id="L23" class="blob-num js-line-number" data-line-number="23"></td>
+        <td id="LC23" class="blob-code blob-code-inner js-file-line"><span class=pl-k>for</span> <span class=pl-s1>index</span>, <span class=pl-s1>row</span> <span class=pl-c1>in</span> <span class=pl-s1>df</span>.<span class=pl-en>iterrows</span>():</td>
+      </tr>
+      <tr>
+        <td id="L24" class="blob-num js-line-number" data-line-number="24"></td>
+        <td id="LC24" class="blob-code blob-code-inner js-file-line">  <span class=pl-k>if</span> <span class=pl-s1>row</span>[<span class=pl-s>&quot;hasImage&quot;</span>] <span class=pl-c1>==</span> <span class=pl-c1>True</span> <span class=pl-c1>and</span> <span class=pl-s1>row</span>[<span class=pl-s>&quot;image_url&quot;</span>] <span class=pl-c1>!=</span> <span class=pl-s>&quot;&quot;</span> <span class=pl-c1>and</span> <span class=pl-s1>row</span>[<span class=pl-s>&quot;image_url&quot;</span>] <span class=pl-c1>!=</span> <span class=pl-s>&quot;nan&quot;</span>:</td>
+      </tr>
+      <tr>
+        <td id="L25" class="blob-num js-line-number" data-line-number="25"></td>
+        <td id="LC25" class="blob-code blob-code-inner js-file-line">    <span class=pl-s1>image_url</span> <span class=pl-c1>=</span> <span class=pl-s1>row</span>[<span class=pl-s>&quot;image_url&quot;</span>]</td>
+      </tr>
+      <tr>
+        <td id="L26" class="blob-num js-line-number" data-line-number="26"></td>
+        <td id="LC26" class="blob-code blob-code-inner js-file-line">    <span class=pl-s1>urllib</span>.<span class=pl-s1>request</span>.<span class=pl-en>urlretrieve</span>(<span class=pl-s1>image_url</span>, <span class=pl-s>&quot;images/&quot;</span> <span class=pl-c1>+</span> <span class=pl-s1>row</span>[<span class=pl-s>&quot;id&quot;</span>] <span class=pl-c1>+</span> <span class=pl-s>&quot;.jpg&quot;</span>)</td>
+      </tr>
+      <tr>
+        <td id="L27" class="blob-num js-line-number" data-line-number="27"></td>
+        <td id="LC27" class="blob-code blob-code-inner js-file-line">  <span class=pl-s1>pbar</span>.<span class=pl-en>update</span>(<span class=pl-c1>1</span>)</td>
+      </tr>
+      <tr>
+        <td id="L28" class="blob-num js-line-number" data-line-number="28"></td>
+        <td id="LC28" class="blob-code blob-code-inner js-file-line"><span class=pl-en>print</span>(<span class=pl-s>&quot;done&quot;</span>)</td>
+      </tr>
+</table>
+
+  <details class="details-reset details-overlay BlobToolbar position-absolute js-file-line-actions dropdown d-none" aria-hidden="true">
+    <summary class="btn-octicon ml-0 px-2 p-0 color-bg-primary border color-border-tertiary rounded-1" aria-label="Inline file action toolbar">
+      <svg class="octicon octicon-kebab-horizontal" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M8 9a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM1.5 9a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm13 0a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"></path></svg>
+    </summary>
+    <details-menu>
+      <ul class="BlobToolbar-dropdown dropdown-menu dropdown-menu-se mt-2" style="width:185px">
+        <li>
+          <clipboard-copy role="menuitem" class="dropdown-item" id="js-copy-lines" style="cursor:pointer;">
+            Copy lines
+          </clipboard-copy>
+        </li>
+        <li>
+          <clipboard-copy role="menuitem" class="dropdown-item" id="js-copy-permalink" style="cursor:pointer;">
+            Copy permalink
+          </clipboard-copy>
+        </li>
+        <li><a class="dropdown-item js-update-url-with-hash" id="js-view-git-blame" role="menuitem" href="/entitize/Fakeddit/blame/bd05ca4f790d7eedeb84d3f3555f5a1eb91ed917/image_downloader.py">View git blame</a></li>
+          <li><a class="dropdown-item" id="js-new-issue" role="menuitem" href="/entitize/Fakeddit/issues/new">Reference in new issue</a></li>
+      </ul>
+    </details-menu>
+  </details>
+
   </div>
 
     </div>
 
-  </readme-toc>
 
   
 
@@ -1474,10 +1598,10 @@ $ pip install -r requirements.txt
      hidden
      data-tagsearch-url="/entitize/Fakeddit/find-definition"
      data-tagsearch-ref="master"
-     data-tagsearch-path="README.md"
-     data-tagsearch-lang="Markdown"
-     data-hydro-click="{&quot;event_type&quot;:&quot;code_navigation.click_on_symbol&quot;,&quot;payload&quot;:{&quot;action&quot;:&quot;click_on_symbol&quot;,&quot;repository_id&quot;:220714260,&quot;ref&quot;:&quot;master&quot;,&quot;language&quot;:&quot;Markdown&quot;,&quot;originating_url&quot;:&quot;https://github.com/entitize/Fakeddit/blob/master/README.md&quot;,&quot;user_id&quot;:12649403}}"
-     data-hydro-click-hmac="f4ae59739d922d9d6d69ca34662571ac468750182460b9008f1f50bd682957d3">
+     data-tagsearch-path="image_downloader.py"
+     data-tagsearch-lang="Python"
+     data-hydro-click="{&quot;event_type&quot;:&quot;code_navigation.click_on_symbol&quot;,&quot;payload&quot;:{&quot;action&quot;:&quot;click_on_symbol&quot;,&quot;repository_id&quot;:220714260,&quot;ref&quot;:&quot;master&quot;,&quot;language&quot;:&quot;Python&quot;,&quot;originating_url&quot;:&quot;https://github.com/entitize/Fakeddit/blob/master/image_downloader.py&quot;,&quot;user_id&quot;:12649403}}"
+     data-hydro-click-hmac="2d2f89e2dcfe6cec316496aa4850eb77a24ae2bf44a0b3ea3fae4c171209508b">
   <div class="Popover-message Popover-message--large Popover-message--top-left TagsearchPopover mt-1 mb-4 mx-auto Box color-shadow-large">
     <div class="TagsearchPopover-content js-tagsearch-popover-content overflow-auto" style="will-change:transform;">
     </div>
