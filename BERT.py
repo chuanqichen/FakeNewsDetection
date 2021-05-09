@@ -30,6 +30,22 @@ from transformers import (
                          AdamW)
 
 
+# If there's a GPU available...
+if torch.cuda.is_available():    
+
+    # Tell PyTorch to use the GPU.    
+    device = torch.device("cuda")
+
+    print('There are %d GPU(s) available.' % torch.cuda.device_count())
+
+    print('We will use the GPU:', torch.cuda.get_device_name(0))
+
+# If not...
+else:
+    print('No GPU available, using the CPU instead.')
+    device = torch.device("cpu")
+
+
 
 def tokenize_dataset(df, num_of_way):
     df = df.sample(frac=1).reset_index(drop=True)    
@@ -163,6 +179,12 @@ def format_time(elapsed):
 df_train = pd.read_csv('Data/all_train.tsv',encoding='UTF-8',delimiter="\t")
 df_val = pd.read_csv('Data/all_validate.tsv',encoding='UTF-8',delimiter="\t")
 df_test = pd.read_csv('Data/all_test_public.tsv',encoding='UTF-8',delimiter="\t")
+
+# clean NaN in clean titles
+df_train = df_train[df_train['clean_title'].notna()]
+df_val = df_val[df_val['clean_title'].notna()]
+df_test = df_test[df_test['clean_title'].notna()]
+
 num_of_way = 2 #2 for 2-way, 3 for 3-way, 6 for 6-way
 
 # BERT
@@ -174,7 +196,7 @@ bert_model = BertForSequenceClassification.from_pretrained("bert-base-uncased", 
                                                           )
 bert_tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
 # Tell pytorch to run this model on the GPU.
-bert_model.cuda()
+# bert_model.cuda()
 print(' BERT model loaded')
 bert_train_dataset = tokenize_dataset(df_train,num_of_way)
 bert_val_dataset = tokenize_dataset(df_val,num_of_way)
@@ -297,7 +319,7 @@ for epoch_i in range(0, epochs):
         # are given and what flags are set. For our usage here, it returns
         # the loss (because we provided labels) and the "logits"--the bert_model
         # outputs prior to activation.
-        loss, logits = bert_model(b_input_ids, 
+        (loss, logits) = bert_model(b_input_ids, 
                              token_type_ids=None, 
                              attention_mask=b_input_mask, 
                              labels=b_labels)
