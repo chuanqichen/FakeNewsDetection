@@ -31,7 +31,7 @@ from transformers import (
 
 
 
-def tokenize_dataset(df, num_of_way=num_of_way):
+def tokenize_dataset(df, num_of_way):
     df = df.sample(frac=1).reset_index(drop=True)    
 
     # Report the number of sentences.
@@ -160,10 +160,10 @@ def format_time(elapsed):
 # The 2-way labels are:
 # 0-true
 # 1-fake
-df_train = pd.read_csv('/Data/all_train.tsv',encoding='UTF-8')
-df_val = pd.read_csv('/Data/all_validation.tsv',encoding='UTF-8')
-df_test = pd.read_csv('/Data/all_test_public.tsv',encoding='UTF-8')
-num_of_way = 3 #2 for 2-way, 3 for 3-way, 6 for 6-way
+df_train = pd.read_csv('Data/all_train.tsv',encoding='UTF-8',delimiter="\t")
+df_val = pd.read_csv('Data/all_validate.tsv',encoding='UTF-8',delimiter="\t")
+df_test = pd.read_csv('Data/all_test_public.tsv',encoding='UTF-8',delimiter="\t")
+num_of_way = 2 #2 for 2-way, 3 for 3-way, 6 for 6-way
 
 # BERT
 bert_model = BertForSequenceClassification.from_pretrained("bert-base-uncased", # Use the 12-layer BERT model, with an uncased vocab.
@@ -176,8 +176,8 @@ bert_tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
 # Tell pytorch to run this model on the GPU.
 bert_model.cuda()
 print(' BERT model loaded')
-bert_train_dataset = tokenize_dataset(df_train)
-bert_val_dataset = tokenize_dataset(df_val)
+bert_train_dataset = tokenize_dataset(df_train,num_of_way)
+bert_val_dataset = tokenize_dataset(df_val,num_of_way)
 # removing sentence ids from tensor dataset so that it can be used for training 
 bert_train_dataset = index_remover(bert_train_dataset)
 bert_val_dataset = index_remover(bert_val_dataset)
