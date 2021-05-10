@@ -324,7 +324,7 @@ for epoch_i in range(0, epochs):
         # are given and what flags are set. For our usage here, it returns
         # the loss (because we provided labels) and the "logits"--the bert_model
         # outputs prior to activation.
-        (loss, logits) = bert_model(b_input_ids, 
+        loss, logits = bert_model(b_input_ids, 
                              token_type_ids=None, 
                              attention_mask=b_input_mask, 
                              labels=b_labels)
