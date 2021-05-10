@@ -185,6 +185,11 @@ df_train = df_train[df_train['clean_title'].notna()]
 df_val = df_val[df_val['clean_title'].notna()]
 df_test = df_test[df_test['clean_title'].notna()]
 
+# subset data for debug
+# df_train = df_train.iloc[:800]
+# df_val = df_val.iloc[:80]
+# df_test = df_test.iloc[:80]
+
 num_of_way = 2 #2 for 2-way, 3 for 3-way, 6 for 6-way
 
 # BERT
