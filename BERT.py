@@ -17,6 +17,7 @@ from torch.autograd import Variable
 from torch.utils.data import Dataset, DataLoader
 from torch.utils.data import TensorDataset, random_split
 from torch.utils.data import RandomSampler, SequentialSampler
+import json
 
 # loading pre-trained models
 from transformers import get_linear_schedule_with_warmup
@@ -29,6 +30,8 @@ from transformers import (
                           RobertaTokenizer,
                          AdamW)
 
+import logging
+logging.basicConfig(level = logging.ERROR)
 
 # If there's a GPU available...
 if torch.cuda.is_available():    
@@ -176,9 +179,9 @@ def format_time(elapsed):
 # The 2-way labels are:
 # 0-true
 # 1-fake
-df_train = pd.read_csv('Data/all_train.tsv',encoding='UTF-8',delimiter="\t")
-df_val = pd.read_csv('Data/all_validate.tsv',encoding='UTF-8',delimiter="\t")
-df_test = pd.read_csv('Data/all_test_public.tsv',encoding='UTF-8',delimiter="\t")
+df_train = pd.read_csv('../Data/all_train.tsv',encoding='UTF-8',delimiter="\t")
+df_val = pd.read_csv('../Data/all_validate.tsv',encoding='UTF-8',delimiter="\t")
+df_test = pd.read_csv('../Data/all_test_public.tsv',encoding='UTF-8',delimiter="\t")
 
 # clean NaN in clean titles
 df_train = df_train[df_train['clean_title'].notna()]
@@ -194,6 +197,8 @@ bert_model = BertForSequenceClassification.from_pretrained("bert-base-uncased", 
                                                                 output_attentions = False, # Whether the model returns attentions weights.
                                                                 output_hidden_states = False # Whether the model returns all hidden-states.
                                                           )
+
+bert_model.to(device)
 bert_tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
 # Tell pytorch to run this model on the GPU.
 # bert_model.cuda()
@@ -231,7 +236,7 @@ bert_optimizer = AdamW(bert_model.parameters(),
 
 # Number of training epochs. The BERT authors recommend between 2 and 4. 
 # We chose to run for 2,I have already seen that the model starts overfitting beyound 2 epochs
-epochs = 2
+epochs = 1
 
 # Total number of training steps is [number of batches] x [number of epochs]. 
 # (Note that this is not the same as the number of training samples).
@@ -375,9 +380,14 @@ for epoch_i in range(0, epochs):
     total_eval_loss = 0
     nb_eval_steps = 0
 
+    batch_counter = 0
     # Evaluate data for one epoch
     for batch in bert_validation_dataloader:
-        
+        if batch_counter > 100:
+            break
+        else:
+            batch_counter += 1
+
         # Unpack this training batch from our dataloader. 
         #
         # As we unpack the batch, we'll also copy each tensor to the GPU using 
@@ -447,7 +457,10 @@ print("Training complete!")
 
 print("Total training took {:} (h:mm:ss)".format(format_time(time.time()-total_t0)))
 
-
+torch.save(bert_model.state_dict(), "bert_model_save")
+# open output file for writing
+with open('bert_training_stats.txt', 'w') as filehandle:
+    json.dump(bert_training_stats, filehandle)
 
 # Display floats with two decimal places.
 pd.set_option('precision', 2)
@@ -536,7 +549,7 @@ for batch in prediction_dataloader:
     # speeding up prediction
     with torch.no_grad():
         # Forward pass, calculate logit predictions
-        outputs = roberta_model(b_input_ids, token_type_ids=None, 
+        outputs = bert_model(b_input_ids, token_type_ids=None,
                         attention_mask=b_input_mask)  
 
     logits = outputs[0]  
