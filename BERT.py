@@ -303,7 +303,7 @@ for epoch_i in range(0, epochs):
             # Report progress.
             print('  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.'.format(step, len(bert_train_dataloader), elapsed))
 
-        # Unpack this training batch from our dataloader. 
+        # Unpack this training batch from our dataloader.
         #
         # As we unpack the batch, we'll also copy each tensor to the GPU using the 
         # `to` method.
@@ -388,10 +388,6 @@ for epoch_i in range(0, epochs):
     batch_counter = 0
     # Evaluate data for one epoch
     for batch in bert_validation_dataloader:
-        if batch_counter > 100:
-            break
-        else:
-            batch_counter += 1
 
         # Unpack this training batch from our dataloader. 
         #
@@ -596,7 +592,13 @@ def get_eval_report(labels, preds):
         "fp": fp,
         "fn": fn
     }
-get_eval_report(flat_true_labels, flat_predictions)
+eval_report = get_eval_report(flat_true_labels, flat_predictions)
+print("eval summary: ", eval_report)
+
+with open('eval_report.txt', 'w') as filehandle2:
+    json.dump(eval_report, filehandle2)
+
+
 
 # The input data dir. Should contain the .tsv files (or other data files) for the task.
 DATA_DIR = "Data/"
@@ -650,6 +652,7 @@ def compute_metrics(task_name, labels, preds):
     assert len(preds) == len(labels)
     return get_eval_report(task_name, labels, preds)
 
+model = bert_model
 model.eval()
 eval_loss = 0
 nb_eval_steps = 0
@@ -666,7 +669,7 @@ for input_ids, input_mask, segment_ids, label_ids in tqdm_notebook(eval_dataload
 
     # create eval loss and other metric required by the task
     if OUTPUT_MODE == "classification":
-        loss_fct = CrossEntropyLoss()
+        loss_fct = nn.CrossEntropyLoss()
         tmp_eval_loss = loss_fct(logits.view(-1, num_labels), label_ids.view(-1))
     elif OUTPUT_MODE == "regression":
         loss_fct = MSELoss()
