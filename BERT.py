@@ -242,7 +242,7 @@ bert_optimizer = AdamW(bert_model.parameters(),
 # Number of training epochs. The BERT authors recommend between 2 and 4. 
 # We chose to run for 2,I have already seen that the model starts overfitting beyound 2 epochs
 epochs = 1
-skip_train = True
+skip_train = False
 
 # Total number of training steps is [number of batches] x [number of epochs]. 
 # (Note that this is not the same as the number of training samples).
@@ -463,7 +463,7 @@ if skip_train == False:
 if skip_train:
     bert_model = torch.load("bert_model_save")
 else:
-    torch.save(bert_model.state_dict(), "bert_model_save")
+    torch.save(bert_model, "bert_model_save")
 
     # open output file for writing
     with open('bert_training_stats.txt', 'w') as filehandle:
