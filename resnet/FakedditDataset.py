@@ -34,7 +34,7 @@ class FakedditDataset(Dataset):
                                 self.csv_frame.loc[idx, 'id'] + '.jpg')
         image = io.imread(img_name)
         label = self.csv_frame.loc[idx, '2_way_label']
-        sample = {'image': image, 'label': label}
+        sample = {'image': image, 'name': img_name, 'label': label}
 
         if self.transform:
             sample = self.transform(sample)
@@ -43,5 +43,6 @@ class FakedditDataset(Dataset):
 
 
 if __name__ == "__main__":
-    print(os.getcwd())
-    fake_data = FakedditDataset(csv_file='../../multimodal_validate.tsv', root_dir='../../public_image_set/')
+    fake_data = FakedditDataset(csv_file='/home/akahs/Data/multimodal_test_public.tsv', root_dir='/home/akahs/Data/public_image_set/')
+    one_img = fake_data[0]
+    io.imsave(os.path.join('/home/akahs/',one_img['name']), one_img['image'])
