@@ -29,10 +29,9 @@ class FakedditDataset(Dataset):
     def __getitem__(self, idx):
         if torch.is_tensor(idx):
             idx = idx.tolist()
-
-        img_name = os.path.join(self.root_dir,
-                                self.csv_frame.loc[idx, 'id'] + '.jpg')
-        image = io.imread(img_name)
+        img_name = self.csv_frame.loc[idx, 'id'] + '.jpg'
+        img_path = os.path.join(self.root_dir, img_name)
+        image = io.imread(img_path)
         label = self.csv_frame.loc[idx, '2_way_label']
         sample = {'image': image, 'name': img_name, 'label': label}
 
@@ -45,4 +44,5 @@ class FakedditDataset(Dataset):
 if __name__ == "__main__":
     fake_data = FakedditDataset(csv_file='/home/akahs/Data/multimodal_test_public.tsv', root_dir='/home/akahs/Data/public_image_set/')
     one_img = fake_data[0]
+    print(one_img['name'])
     io.imsave(os.path.join('/home/akahs/',one_img['name']), one_img['image'])
