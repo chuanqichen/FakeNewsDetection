@@ -54,6 +54,7 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=2):
 
             # Create a queue to monitor loss
             loss_q = deque(maxlen=100)
+            acc_q = deque(maxlen=100)
             # Iterate over data.
             counter = 0
             for inputs, labels in tqdm(dataloaders[phase]):
@@ -70,11 +71,13 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=2):
                     outputs = model(inputs)
                     # print(f"output shape: {outputs.size()}; target shape: {labels.size()}")
                     _, preds = torch.max(outputs, 1)
+                    t_pred = outputs > 0.5
+                    acc = (t_pred.squeeze() == labels).float().sum() / len(labels)
+                    acc_q.append(acc.item())
                     loss = criterion(outputs, labels.unsqueeze(-1).float())
                     loss_q.append(loss.item())
                     if counter % 100 == 0:
-                        print(f"Iter {counter}, loss: {mean(loss_q)}")
-
+                        print(f"Iter {counter}, loss: {mean(loss_q)}, accuracy:{mean(acc_q)}")
                     # backward + optimize only if in training phase
                     if phase == 'train':
                         loss.backward()
