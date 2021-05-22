@@ -6,6 +6,8 @@ from torchvision import transforms, models
 from FakedditDataset import FakedditDataset, my_collate
 import os, time, copy
 from tqdm import tqdm
+from collections import deque
+from statistics import mean
 
 data_transforms = transforms.Compose([
     transforms.Resize((224, 224)),
@@ -50,6 +52,8 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=2):
             running_loss = 0.0
             running_corrects = 0
 
+            # Create a queue to monitor loss
+            loss_q = deque(maxlen=100)
             # Iterate over data.
             counter = 0
             for inputs, labels in tqdm(dataloaders[phase]):
@@ -67,8 +71,9 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=2):
                     # print(f"output shape: {outputs.size()}; target shape: {labels.size()}")
                     _, preds = torch.max(outputs, 1)
                     loss = criterion(outputs, labels.unsqueeze(-1).float())
+                    loss_q.append(loss)
                     if counter % 100 == 0:
-                        print(f"Iter {counter}, loss: {loss}")
+                        print(f"Iter {counter}, loss: {mean(loss_q)}")
 
                     # backward + optimize only if in training phase
                     if phase == 'train':
