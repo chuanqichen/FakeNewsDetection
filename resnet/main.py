@@ -71,7 +71,7 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=2):
                     # print(f"output shape: {outputs.size()}; target shape: {labels.size()}")
                     _, preds = torch.max(outputs, 1)
                     loss = criterion(outputs, labels.unsqueeze(-1).float())
-                    loss_q.append(loss)
+                    loss_q.append(loss.item())
                     if counter % 100 == 0:
                         print(f"Iter {counter}, loss: {mean(loss_q)}")
 
