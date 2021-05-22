@@ -45,7 +45,7 @@ class FakedditDataset(Dataset):
                 image = self.transform(image)
             return image, label
         except Exception:
-            print(f"Corrupted image {img_name}")
+            #print(f"Corrupted image {img_name}")
             return None
 
 

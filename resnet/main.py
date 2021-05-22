@@ -18,9 +18,7 @@ l_datatypes = ['train', 'validate']
 csv_fnames = {'train': 'multimodal_train.tsv', 'validate': 'multimodal_validate.tsv'}
 image_datasets = {x: FakedditDataset(os.path.join(csv_dir, csv_fnames[x]), img_dir, transform=data_transforms) for x in
                   l_datatypes}
-# train_set = FakedditDataset(os.path.join(csv_dir, 'multimodal_train.tsv'), img_dir, transform=data_transforms)
-# valid_set = FakedditDataset(os.path.join(csv_dir, 'multimodal_validate.tsv'), img_dir, transform=data_transforms)
-
+# Dataloader, pin_memory doesn't make a difference
 dataloaders = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=64, shuffle=True, num_workers=2, collate_fn=my_collate) for x in l_datatypes}
 
 dataset_sizes = {x: len(image_datasets[x]) for x in l_datatypes}
@@ -29,6 +27,7 @@ dataset_sizes = {x: len(image_datasets[x]) for x in l_datatypes}
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print(device)
 
+print("Note: corrupted images will be skipped in training")
 
 def train_model(model, criterion, optimizer, scheduler, num_epochs=2):
     since = time.time()
@@ -65,8 +64,9 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=2):
                 # track history if only in train
                 with torch.set_grad_enabled(phase == 'train'):
                     outputs = model(inputs)
+                    # print(f"output shape: {outputs.size()}; target shape: {labels.size()}")
                     _, preds = torch.max(outputs, 1)
-                    loss = criterion(outputs, labels)
+                    loss = criterion(outputs, labels.unsqueeze(-1).float())
                     if counter % 100 == 0:
                         print(f"Iter {counter}, loss: {loss}")
 
@@ -105,7 +105,8 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=2):
 
 
 # Initialize model and optimizer
-model_ft = models.resnet18(pretrained=True)
+#model_ft = models.resnet18(pretrained=True)
+model_ft = models.resnet50(pretrained=True)
 num_ftrs = model_ft.fc.in_features
 # Here the size of each output sample is set to 1.
 # Alternatively, it can be generalized to nn.Linear(num_ftrs, len(class_names)).
@@ -117,7 +118,8 @@ model_ft = model_ft.to(device)
 criterion = nn.BCEWithLogitsLoss()
 
 # Observe that all parameters are being optimized
-optimizer_ft = optim.SGD(model_ft.parameters(), lr=0.001, momentum=0.9)
+#optimizer_ft = optim.SGD(model_ft.parameters(), lr=0.001, momentum=0.9)
+optimizer_ft = optim.Adam(model_ft.parameters(), lr=1e-4)
 
 # Decay LR by a factor of 0.1 every 7 epochs
 exp_lr_scheduler = lr_scheduler.StepLR(optimizer_ft, step_size=7, gamma=0.1)
