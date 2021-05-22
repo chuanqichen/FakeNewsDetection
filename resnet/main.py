@@ -52,7 +52,9 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=2):
             running_corrects = 0
 
             # Iterate over data.
+            counter = 0
             for inputs, labels in tqdm(dataloaders[phase]):
+                counter += 1
                 inputs = inputs.to(device)
                 labels = labels.to(device)
 
@@ -65,6 +67,8 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=2):
                     outputs = model(inputs)
                     _, preds = torch.max(outputs, 1)
                     loss = criterion(outputs, labels)
+                    if counter % 100 == 0:
+                        print(f"Iter {counter}, loss: {loss}")
 
                     # backward + optimize only if in training phase
                     if phase == 'train':
@@ -103,13 +107,14 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=2):
 # Initialize model and optimizer
 model_ft = models.resnet18(pretrained=True)
 num_ftrs = model_ft.fc.in_features
-# Here the size of each output sample is set to 2.
+# Here the size of each output sample is set to 1.
 # Alternatively, it can be generalized to nn.Linear(num_ftrs, len(class_names)).
-model_ft.fc = nn.Linear(num_ftrs, 2)
+model_ft.fc = nn.Linear(num_ftrs, 1)
 
 model_ft = model_ft.to(device)
 
-criterion = nn.CrossEntropyLoss()
+# criterion = nn.CrossEntropyLoss()
+criterion = nn.BCEWithLogitsLoss()
 
 # Observe that all parameters are being optimized
 optimizer_ft = optim.SGD(model_ft.parameters(), lr=0.001, momentum=0.9)
