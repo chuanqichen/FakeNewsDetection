@@ -70,7 +70,7 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=2, report_len
                 with torch.set_grad_enabled(phase == 'train'):
                     outputs = model(inputs)
                     # print(f"output shape: {outputs.size()}; target shape: {labels.size()}")
-                    _, preds = torch.max(outputs, 1)
+                    # _, preds = torch.max(outputs, 1)
                     t_pred = outputs > 0.5
                     acc = (t_pred.squeeze() == labels).float().sum() / len(labels)
                     acc_q.append(acc.item())
@@ -85,7 +85,7 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=2, report_len
 
                 # statistics
                 running_loss += loss.item() * inputs.size(0)
-                running_corrects += torch.sum(preds == labels.data)
+                running_corrects += torch.sum(t_pred.squeeze() == labels)
             if phase == 'train':
                 scheduler.step()
 
