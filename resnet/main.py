@@ -31,7 +31,7 @@ print(device)
 
 print("Note: corrupted images will be skipped in training")
 
-def train_model(model, criterion, optimizer, scheduler, num_epochs=2):
+def train_model(model, criterion, optimizer, scheduler, num_epochs=2, report_len=500):
     since = time.time()
 
     best_model_wts = copy.deepcopy(model.state_dict())
@@ -42,7 +42,7 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=2):
         print('-' * 10)
 
         # Each epoch has a training and validation phase
-        for phase in ['train', 'val']:
+        for phase in l_datatypes:
             print(f'{phase} phase')
             if phase == 'train':
                 model.train()  # Set model to training mode
@@ -53,8 +53,8 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=2):
             running_corrects = 0
 
             # Create a queue to monitor loss
-            loss_q = deque(maxlen=100)
-            acc_q = deque(maxlen=100)
+            loss_q = deque(maxlen=report_len)
+            acc_q = deque(maxlen=report_len)
             # Iterate over data.
             counter = 0
             for inputs, labels in tqdm(dataloaders[phase]):
@@ -76,7 +76,7 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=2):
                     acc_q.append(acc.item())
                     loss = criterion(outputs, labels.unsqueeze(-1).float())
                     loss_q.append(loss.item())
-                    if counter % 100 == 0:
+                    if counter % report_len == 0:
                         print(f"Iter {counter}, loss: {mean(loss_q)}, accuracy:{mean(acc_q)}")
                     # backward + optimize only if in training phase
                     if phase == 'train':
@@ -96,7 +96,7 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=2):
                 phase, epoch_loss, epoch_acc))
 
             # deep copy the model
-            if phase == 'val' and epoch_acc > best_acc:
+            if phase == 'validate' and epoch_acc > best_acc:
                 best_acc = epoch_acc
                 best_model_wts = copy.deepcopy(model.state_dict())
 
@@ -134,3 +134,6 @@ exp_lr_scheduler = lr_scheduler.StepLR(optimizer_ft, step_size=7, gamma=0.1)
 
 # Train the model
 model_ft = train_model(model_ft, criterion, optimizer_ft, exp_lr_scheduler, num_epochs=1)
+
+# save model
+torch.save(model_ft.state_dict(), 'fakeddit_resnet.pt')
