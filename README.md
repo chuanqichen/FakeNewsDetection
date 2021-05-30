@@ -41,6 +41,8 @@ To install PyTorch via pip, and do not have a CUDA-capable system or do not requ
 With CUDA
 To install PyTorch via pip, and do have a CUDA-capable system, in the above selector, choose OS: Windows, Package: Pip and the CUDA version suited to your machine. Often, the latest CUDA version is better. Then, run the command that is presented to you.
 
+### 3: Install torchvision
+pip install torchvision --trusted-host files.pythonhosted.org
 
 
 ## Getting Started
