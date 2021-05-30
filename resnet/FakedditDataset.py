@@ -1,9 +1,9 @@
 import os
 import torch
-import pandas as pd
 # from skimage import io, transform
 from PIL import Image
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 from torch.utils.data import Dataset, DataLoader
 from torch.utils.data.dataloader import default_collate
