@@ -336,6 +336,7 @@ if not skip_train:
             # are given and what flags are set. For our usage here, it returns
             # the loss (because we provided labels) and the "logits"--the bert_model
             # outputs prior to activation.
+            # note in older vision (3.5.1) the model output is a tuple (loss, logits)
             outputs = bert_model(b_input_ids,
                                  token_type_ids=None,
                                  attention_mask=b_input_mask,
@@ -469,10 +470,10 @@ if not skip_train:
 
 if skip_train:  # Load model from dir
     # bert_model = torch.load("bert_model_save")
-    bert_model = BertForSequenceClassification.from_pretrained('/dir/of/model')
+    bert_model = BertForSequenceClassification.from_pretrained('bert_save_dir/')
 else:  # save model and training statistics
     # torch.save(bert_model, "bert_model_save")
-    bert_model.save_pretrained('bert_save_dir')
+    bert_model.save_pretrained('bert_save_dir/')
 
     # open output file for writing
     with open('bert_training_stats.txt', 'w') as filehandle:
