@@ -336,10 +336,12 @@ if not skip_train:
             # are given and what flags are set. For our usage here, it returns
             # the loss (because we provided labels) and the "logits"--the bert_model
             # outputs prior to activation.
-            (loss, logits) = bert_model(b_input_ids,
+            outputs = bert_model(b_input_ids,
                                  token_type_ids=None,
                                  attention_mask=b_input_mask,
                                  labels=b_labels)
+            loss = outputs.loss
+            logits = outputs.logits
 
             # Accumulate the training loss over all of the batches so that we can
             # calculate the average loss at the end. `loss` is a Tensor containing a

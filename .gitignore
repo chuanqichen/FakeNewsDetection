@@ -3,6 +3,7 @@
 .gitattributes
 *.tsv
 *.pt
+bert_model_save
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
