@@ -615,64 +615,64 @@ with open('eval_report.json', 'w') as filehandle2:
 
 
 
-# # The input data dir. Should contain the .tsv files (or other data files) for the task.
-# DATA_DIR = "../Data/"
-#
-# # Bert pre-trained model selected in the list: bert-base-uncased,
-# # bert-large-uncased, bert-base-cased, bert-large-cased, bert-base-multilingual-uncased,
-# # bert-base-multilingual-cased, bert-base-chinese.
-# BERT_MODEL = 'fakeddit_BERT.tar.gz'
-#
-# # The name of the task to train.I'm going to name this 'yelp'.
-# TASK_NAME = 'fakeddit_BERT'
-#
-# # The output directory where the fine-tuned model and checkpoints will be written.
-# OUTPUT_DIR = f'outputs/{TASK_NAME}/'
-#
-# # The directory where the evaluation reports will be written to.
-# REPORTS_DIR = f'reports/{TASK_NAME}_evaluation_reports/'
-#
-# # This is where BERT will look for pre-trained models to load parameters from.
-# CACHE_DIR = 'cache/'
-#
-# # The maximum total input sequence length after WordPiece tokenization.
-# # Sequences longer than this will be truncated, and sequences shorter than this will be padded.
-# MAX_SEQ_LENGTH = 128
-#
-# TRAIN_BATCH_SIZE = 24
-# EVAL_BATCH_SIZE = 8
-# LEARNING_RATE = 2e-5
-# NUM_TRAIN_EPOCHS = 1
-# RANDOM_SEED = 42
-# GRADIENT_ACCUMULATION_STEPS = 1
-# WARMUP_PROPORTION = 0.1
-# OUTPUT_MODE = 'classification'
-#
-# CONFIG_NAME = "config.json"
-# WEIGHTS_NAME = "pytorch_model.bin"
-#
-# def get_eval_report(task_name, labels, preds):
-#     mcc = matthews_corrcoef(labels, preds)
-#     tn, fp, fn, tp = confusion_matrix(labels, preds).ravel()
-#     return {
-#         "task": task_name,
-#         "mcc": mcc,
-#         "tp": tp,
-#         "tn": tn,
-#         "fp": fp,
-#         "fn": fn
-#     }
-#
-# def compute_metrics(task_name, labels, preds):
-#     assert len(preds) == len(labels)
-#     return get_eval_report(task_name, labels, preds)
-#
-# model = bert_model
-# model.eval()
-# eval_loss = 0
-# nb_eval_steps = 0
-# preds = []
-#
+# The input data dir. Should contain the .tsv files (or other data files) for the task.
+DATA_DIR = "../Data/"
+
+# Bert pre-trained model selected in the list: bert-base-uncased,
+# bert-large-uncased, bert-base-cased, bert-large-cased, bert-base-multilingual-uncased,
+# bert-base-multilingual-cased, bert-base-chinese.
+BERT_MODEL = 'fakeddit_BERT.tar.gz'
+
+# The name of the task to train.I'm going to name this 'yelp'.
+TASK_NAME = 'fakeddit_BERT'
+
+# The output directory where the fine-tuned model and checkpoints will be written.
+OUTPUT_DIR = f'outputs/{TASK_NAME}/'
+
+# The directory where the evaluation reports will be written to.
+REPORTS_DIR = f'reports/{TASK_NAME}_evaluation_reports/'
+
+# This is where BERT will look for pre-trained models to load parameters from.
+CACHE_DIR = 'cache/'
+
+# The maximum total input sequence length after WordPiece tokenization.
+# Sequences longer than this will be truncated, and sequences shorter than this will be padded.
+MAX_SEQ_LENGTH = 128
+
+TRAIN_BATCH_SIZE = 24
+EVAL_BATCH_SIZE = 8
+LEARNING_RATE = 2e-5
+NUM_TRAIN_EPOCHS = 1
+RANDOM_SEED = 42
+GRADIENT_ACCUMULATION_STEPS = 1
+WARMUP_PROPORTION = 0.1
+OUTPUT_MODE = 'classification'
+
+CONFIG_NAME = "config.json"
+WEIGHTS_NAME = "pytorch_model.bin"
+
+def get_eval_report(task_name, labels, preds):
+    mcc = matthews_corrcoef(labels, preds)
+    tn, fp, fn, tp = confusion_matrix(labels, preds).ravel()
+    return {
+        "task": task_name,
+        "mcc": mcc,
+        "tp": tp,
+        "tn": tn,
+        "fp": fp,
+        "fn": fn
+    }
+
+def compute_metrics(task_name, labels, preds):
+    assert len(preds) == len(labels)
+    return get_eval_report(task_name, labels, preds)
+
+model = bert_model
+model.eval()
+eval_loss = 0
+nb_eval_steps = 0
+preds = []
+
 # for input_ids, input_mask, segment_ids, label_ids in tqdm_notebook(eval_dataloader, desc="Evaluating"):
 #     input_ids = input_ids.to(device)
 #     input_mask = input_mask.to(device)
