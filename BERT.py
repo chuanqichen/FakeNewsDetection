@@ -179,9 +179,14 @@ def format_time(elapsed):
 # The 2-way labels are:
 # 0-true
 # 1-fake
-df_train = pd.read_csv('../Data/all_train.tsv',encoding='UTF-8',delimiter="\t")
-df_val = pd.read_csv('../Data/all_validate.tsv',encoding='UTF-8',delimiter="\t")
-df_test = pd.read_csv('../Data/all_test_public.tsv',encoding='UTF-8',delimiter="\t")
+# Whole dataset
+# df_train = pd.read_csv('../Data/all_train.tsv',encoding='UTF-8',delimiter="\t")
+# df_val = pd.read_csv('../Data/all_validate.tsv',encoding='UTF-8',delimiter="\t")
+# df_test = pd.read_csv('../Data/all_test_public.tsv',encoding='UTF-8',delimiter="\t")
+# Multimodal dataset
+df_train = pd.read_csv('../Data/multimodal_train.tsv',encoding='UTF-8',delimiter="\t")
+df_val = pd.read_csv('../Data/multimodal_validate.tsv',encoding='UTF-8',delimiter="\t")
+df_test = pd.read_csv('../Data/multimodal_test_public.tsv',encoding='UTF-8',delimiter="\t")
 
 # clean NaN in clean titles
 df_train = df_train[df_train['clean_title'].notna()]
@@ -268,8 +273,8 @@ bert_training_stats = []
 # Measure the total training time for the whole run.
 total_t0 = time.time()
 
-# For each epoch...
-if skip_train == False:
+# Training and validation
+if not skip_train:
     for epoch_i in range(0, epochs):
 
         # ========================================
@@ -460,10 +465,12 @@ if skip_train == False:
 
     print("Total training took {:} (h:mm:ss)".format(format_time(time.time()-total_t0)))
 
-if skip_train:
-    bert_model = torch.load("bert_model_save")
-else:
-    torch.save(bert_model, "bert_model_save")
+if skip_train:  # Load model from dir
+    # bert_model = torch.load("bert_model_save")
+    bert_model = BertForSequenceClassification.from_pretrained('/dir/of/model')
+else:  # save model and training statistics
+    # torch.save(bert_model, "bert_model_save")
+    bert_model.save_pretrained('bert_save_dir')
 
     # open output file for writing
     with open('bert_training_stats.txt', 'w') as filehandle:
@@ -484,7 +491,9 @@ else:
     # Display the table.
     df_stats
 
-
+# ========================================
+#               Testing
+# ========================================
 # Report the number of sentences in test dataset.
 print('Number of test sentences: {:,}\n'.format(df_test.shape[0]))
 
@@ -606,102 +615,102 @@ with open('eval_report.json', 'w') as filehandle2:
 
 
 
-# The input data dir. Should contain the .tsv files (or other data files) for the task.
-DATA_DIR = "../Data/"
-
-# Bert pre-trained model selected in the list: bert-base-uncased, 
-# bert-large-uncased, bert-base-cased, bert-large-cased, bert-base-multilingual-uncased,
-# bert-base-multilingual-cased, bert-base-chinese.
-BERT_MODEL = 'fakeddit_BERT.tar.gz'
-
-# The name of the task to train.I'm going to name this 'yelp'.
-TASK_NAME = 'fakeddit_BERT'
-
-# The output directory where the fine-tuned model and checkpoints will be written.
-OUTPUT_DIR = f'outputs/{TASK_NAME}/'
-
-# The directory where the evaluation reports will be written to.
-REPORTS_DIR = f'reports/{TASK_NAME}_evaluation_reports/'
-
-# This is where BERT will look for pre-trained models to load parameters from.
-CACHE_DIR = 'cache/'
-
-# The maximum total input sequence length after WordPiece tokenization.
-# Sequences longer than this will be truncated, and sequences shorter than this will be padded.
-MAX_SEQ_LENGTH = 128
-
-TRAIN_BATCH_SIZE = 24
-EVAL_BATCH_SIZE = 8
-LEARNING_RATE = 2e-5
-NUM_TRAIN_EPOCHS = 1
-RANDOM_SEED = 42
-GRADIENT_ACCUMULATION_STEPS = 1
-WARMUP_PROPORTION = 0.1
-OUTPUT_MODE = 'classification'
-
-CONFIG_NAME = "config.json"
-WEIGHTS_NAME = "pytorch_model.bin"
-
-def get_eval_report(task_name, labels, preds):
-    mcc = matthews_corrcoef(labels, preds)
-    tn, fp, fn, tp = confusion_matrix(labels, preds).ravel()
-    return {
-        "task": task_name,
-        "mcc": mcc,
-        "tp": tp,
-        "tn": tn,
-        "fp": fp,
-        "fn": fn
-    }
-
-def compute_metrics(task_name, labels, preds):
-    assert len(preds) == len(labels)
-    return get_eval_report(task_name, labels, preds)
-
-model = bert_model
-model.eval()
-eval_loss = 0
-nb_eval_steps = 0
-preds = []
-
-for input_ids, input_mask, segment_ids, label_ids in tqdm_notebook(eval_dataloader, desc="Evaluating"):
-    input_ids = input_ids.to(device)
-    input_mask = input_mask.to(device)
-    segment_ids = segment_ids.to(device)
-    label_ids = label_ids.to(device)
-
-    with torch.no_grad():
-        logits = model(input_ids, segment_ids, input_mask, labels=None)
-
-    # create eval loss and other metric required by the task
-    if OUTPUT_MODE == "classification":
-        loss_fct = nn.CrossEntropyLoss()
-        tmp_eval_loss = loss_fct(logits.view(-1, num_labels), label_ids.view(-1))
-    elif OUTPUT_MODE == "regression":
-        loss_fct = MSELoss()
-        tmp_eval_loss = loss_fct(logits.view(-1), label_ids.view(-1))
-
-    eval_loss += tmp_eval_loss.mean().item()
-    nb_eval_steps += 1
-    if len(preds) == 0:
-        preds.append(logits.detach().cpu().numpy())
-    else:
-        preds[0] = np.append(
-            preds[0], logits.detach().cpu().numpy(), axis=0)
-
-eval_loss = eval_loss / nb_eval_steps
-preds = preds[0]
-if OUTPUT_MODE == "classification":
-    preds = np.argmax(preds, axis=1)
-elif OUTPUT_MODE == "regression":
-    preds = np.squeeze(preds)
-result = compute_metrics(TASK_NAME, all_label_ids.numpy(), preds)
-
-result['eval_loss'] = eval_loss
-
-output_eval_file = os.path.join(REPORTS_DIR, "eval_results.txt")
-with open(output_eval_file, "w") as writer:
-    logger.info("***** Eval results *****")
-    for key in (result.keys()):
-        logger.info("  %s = %s", key, str(result[key]))
-        writer.write("%s = %s\n" % (key, str(result[key])))
+# # The input data dir. Should contain the .tsv files (or other data files) for the task.
+# DATA_DIR = "../Data/"
+#
+# # Bert pre-trained model selected in the list: bert-base-uncased,
+# # bert-large-uncased, bert-base-cased, bert-large-cased, bert-base-multilingual-uncased,
+# # bert-base-multilingual-cased, bert-base-chinese.
+# BERT_MODEL = 'fakeddit_BERT.tar.gz'
+#
+# # The name of the task to train.I'm going to name this 'yelp'.
+# TASK_NAME = 'fakeddit_BERT'
+#
+# # The output directory where the fine-tuned model and checkpoints will be written.
+# OUTPUT_DIR = f'outputs/{TASK_NAME}/'
+#
+# # The directory where the evaluation reports will be written to.
+# REPORTS_DIR = f'reports/{TASK_NAME}_evaluation_reports/'
+#
+# # This is where BERT will look for pre-trained models to load parameters from.
+# CACHE_DIR = 'cache/'
+#
+# # The maximum total input sequence length after WordPiece tokenization.
+# # Sequences longer than this will be truncated, and sequences shorter than this will be padded.
+# MAX_SEQ_LENGTH = 128
+#
+# TRAIN_BATCH_SIZE = 24
+# EVAL_BATCH_SIZE = 8
+# LEARNING_RATE = 2e-5
+# NUM_TRAIN_EPOCHS = 1
+# RANDOM_SEED = 42
+# GRADIENT_ACCUMULATION_STEPS = 1
+# WARMUP_PROPORTION = 0.1
+# OUTPUT_MODE = 'classification'
+#
+# CONFIG_NAME = "config.json"
+# WEIGHTS_NAME = "pytorch_model.bin"
+#
+# def get_eval_report(task_name, labels, preds):
+#     mcc = matthews_corrcoef(labels, preds)
+#     tn, fp, fn, tp = confusion_matrix(labels, preds).ravel()
+#     return {
+#         "task": task_name,
+#         "mcc": mcc,
+#         "tp": tp,
+#         "tn": tn,
+#         "fp": fp,
+#         "fn": fn
+#     }
+#
+# def compute_metrics(task_name, labels, preds):
+#     assert len(preds) == len(labels)
+#     return get_eval_report(task_name, labels, preds)
+#
+# model = bert_model
+# model.eval()
+# eval_loss = 0
+# nb_eval_steps = 0
+# preds = []
+#
+# for input_ids, input_mask, segment_ids, label_ids in tqdm_notebook(eval_dataloader, desc="Evaluating"):
+#     input_ids = input_ids.to(device)
+#     input_mask = input_mask.to(device)
+#     segment_ids = segment_ids.to(device)
+#     label_ids = label_ids.to(device)
+#
+#     with torch.no_grad():
+#         logits = model(input_ids, segment_ids, input_mask, labels=None)
+#
+#     # create eval loss and other metric required by the task
+#     if OUTPUT_MODE == "classification":
+#         loss_fct = nn.CrossEntropyLoss()
+#         tmp_eval_loss = loss_fct(logits.view(-1, num_labels), label_ids.view(-1))
+#     elif OUTPUT_MODE == "regression":
+#         loss_fct = MSELoss()
+#         tmp_eval_loss = loss_fct(logits.view(-1), label_ids.view(-1))
+#
+#     eval_loss += tmp_eval_loss.mean().item()
+#     nb_eval_steps += 1
+#     if len(preds) == 0:
+#         preds.append(logits.detach().cpu().numpy())
+#     else:
+#         preds[0] = np.append(
+#             preds[0], logits.detach().cpu().numpy(), axis=0)
+#
+# eval_loss = eval_loss / nb_eval_steps
+# preds = preds[0]
+# if OUTPUT_MODE == "classification":
+#     preds = np.argmax(preds, axis=1)
+# elif OUTPUT_MODE == "regression":
+#     preds = np.squeeze(preds)
+# result = compute_metrics(TASK_NAME, all_label_ids.numpy(), preds)
+#
+# result['eval_loss'] = eval_loss
+#
+# output_eval_file = os.path.join(REPORTS_DIR, "eval_results.txt")
+# with open(output_eval_file, "w") as writer:
+#     logger.info("***** Eval results *****")
+#     for key in (result.keys()):
+#         logger.info("  %s = %s", key, str(result[key]))
+#         writer.write("%s = %s\n" % (key, str(result[key])))
