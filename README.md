@@ -1,16 +1,3 @@
-# Fakeddit
-
-Kai Nakamura, Sharon Levy, and William Yang Wang. 2020. r/Fakeddit: A New Multimodal Benchmark Dataset for Fine-grained Fake News Detection
-
-Website: https://fakeddit.netlify.app/
-
-Codalab Competition: https://competitions.codalab.org/competitions/25337
-
-Paper: https://arxiv.org/abs/1911.03854
-
-Our lab: http://nlp.cs.ucsb.edu/index.html
-
-
 ## Setup: 
 
 ### 0: Install cuda driver like [CUDA Toolkit 10.2](https://developer.nvidia.com/cuda-10.2-download-archive?target_os=Linux&target_arch=x86_64&target_distro=CentOS&target_version=7&target_type=runfilelocal) 
@@ -43,6 +30,19 @@ To install PyTorch via pip, and do have a CUDA-capable system, in the above sele
 
 ### 3: Install torchvision
 pip install torchvision --trusted-host files.pythonhosted.org
+
+
+## Dataset: Fakeddit
+
+Kai Nakamura, Sharon Levy, and William Yang Wang. 2020. r/Fakeddit: A New Multimodal Benchmark Dataset for Fine-grained Fake News Detection
+
+Website: https://fakeddit.netlify.app/
+
+Codalab Competition: https://competitions.codalab.org/competitions/25337
+
+Paper: https://arxiv.org/abs/1911.03854
+
+Our lab: http://nlp.cs.ucsb.edu/index.html
 
 
 ## Getting Started
