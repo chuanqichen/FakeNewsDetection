@@ -1,6 +1,3 @@
-
-
-
 # Fakeddit
 
 Kai Nakamura, Sharon Levy, and William Yang Wang. 2020. r/Fakeddit: A New Multimodal Benchmark Dataset for Fine-grained Fake News Detection
@@ -12,6 +9,37 @@ Codalab Competition: https://competitions.codalab.org/competitions/25337
 Paper: https://arxiv.org/abs/1911.03854
 
 Our lab: http://nlp.cs.ucsb.edu/index.html
+
+
+## Setup: 
+
+### 0: Install cuda driver like [CUDA Toolkit 10.2](https://developer.nvidia.com/cuda-10.2-download-archive?target_os=Linux&target_arch=x86_64&target_distro=CentOS&target_version=7&target_type=runfilelocal) 
+
+```
+Install instruction in Linux: 
+wget https://developer.download.nvidia.com/compute/cuda/10.2/Prod/local_installers/cuda_10.2.89_440.33.01_linux.run
+sudo sh cuda_10.2.89_440.33.01_linux.run
+
+Update environment variable (you can add it into  ~/.bashrc): 
+LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda-10.2/lib64"
+PATH="$PATH:/usr/local/cuda-10.2/bin"
+```
+
+### 1: Install from requirements.txt (using conda or pip install) 
+
+### 2: Install [pytorch](https://developer.nvidia.com/cuda-zone)  
+
+On MAC or Linux, it's very simple: 
+```
+pip install torch==1.6.0 
+```
+
+On Windows, please follow this link [pytorch](https://developer.nvidia.com/cuda-zone):   
+No CUDA
+To install PyTorch via pip, and do not have a CUDA-capable system or do not require CUDA, in the above selector, choose OS: Windows, Package: Pip and CUDA: None. Then, run the command that is presented to you.
+
+With CUDA
+To install PyTorch via pip, and do have a CUDA-capable system, in the above selector, choose OS: Windows, Package: Pip and the CUDA version suited to your machine. Often, the latest CUDA version is better. Then, run the command that is presented to you.
 
 
 
