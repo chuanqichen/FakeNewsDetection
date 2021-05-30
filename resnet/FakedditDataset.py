@@ -8,6 +8,21 @@ import matplotlib.pyplot as plt
 from torch.utils.data import Dataset, DataLoader
 from torch.utils.data.dataloader import default_collate
 from torchvision import transforms, utils
+import ssl
+
+try:
+    _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+    # Legacy Python that doesn't verify HTTPS certificates by default
+    pass
+else:
+    # Handle target environment that doesn't support HTTPS verification
+    ssl._create_default_https_context = _create_unverified_https_context
+data_transforms = transforms.Compose([
+    transforms.Resize((224, 224)),
+    transforms.ToTensor()
+])
+
 
 
 class FakedditDataset(Dataset):
