@@ -4,6 +4,7 @@
 *.tsv
 *.pt
 bert_model_save
+bert_save_dir/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
