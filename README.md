@@ -31,6 +31,11 @@ To install PyTorch via pip, and do have a CUDA-capable system, in the above sele
 ### 3: Install torchvision
 pip install torchvision --trusted-host files.pythonhosted.org
 
+### 4: Install transformer
+pip install transformers==3.0.0  --trusted-host  files.pythonhosted.org or 
+pip install transformers==3.5.1  --trusted-host  files.pythonhosted.org
+
+
 
 ## Dataset: Fakeddit
 
