@@ -4,7 +4,7 @@ import torch.optim as optim
 from torch.optim import lr_scheduler
 from torchvision import transforms, models
 from my_resnet import resnet50_2way
-from FakedditDataset import FakedditDataset, my_collate
+from FakedditDataset import FakedditImageDataset, my_collate
 import os, time, copy
 from tqdm import tqdm
 from collections import deque
@@ -28,7 +28,7 @@ csv_dir = "../../Data/"
 img_dir = "../../Data/public_image_set/"
 l_datatypes = ['train', 'validate']
 csv_fnames = {'train': 'multimodal_train.tsv', 'validate': 'multimodal_validate.tsv'}
-image_datasets = {x: FakedditDataset(os.path.join(csv_dir, csv_fnames[x]), img_dir, transform=data_transforms) for x in
+image_datasets = {x: FakedditImageDataset(os.path.join(csv_dir, csv_fnames[x]), img_dir, transform=data_transforms) for x in
                   l_datatypes}
 # Dataloader, pin_memory doesn't make a difference
 dataloaders = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=64, shuffle=True, num_workers=2, collate_fn=my_collate) for x in l_datatypes}

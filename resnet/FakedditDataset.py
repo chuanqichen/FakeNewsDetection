@@ -25,8 +25,8 @@ data_transforms = transforms.Compose([
 
 
 
-class FakedditDataset(Dataset):
-    """The Fakeddit dataset class"""
+class FakedditImageDataset(Dataset):
+    """The Fakeddit image dataset class"""
 
     def __init__(self, csv_file, root_dir, transform=None):
         """
@@ -71,7 +71,7 @@ def my_collate(batch):
 
 
 if __name__ == "__main__":
-    fake_data = FakedditDataset(csv_file='/home/akahs/Data/multimodal_test_public.tsv', root_dir='/home/akahs/Data/public_image_set/')
+    fake_data = FakedditImageDataset(csv_file='/home/akahs/Data/multimodal_test_public.tsv', root_dir='/home/akahs/Data/public_image_set/')
     for k in range(10):
         one_img = fake_data[k]
         print(one_img[0].size, one_img[0].mode)
