@@ -121,10 +121,15 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=2, report_len
     model.load_state_dict(best_model_wts)
     return model
 
+def set_parameter_requires_grad(model, feature_extracting):
+    if feature_extracting:
+        for param in model.parameters():
+            param.requires_grad = False
 
 # Initialize model and optimizer
 #model_ft = models.resnet18(pretrained=True)
 model_ft = models.resnet50(pretrained=True)
+set_parameter_requires_grad(model_ft, feature_extract=True)   # freeze the pretrained model
 num_ftrs = model_ft.fc.in_features
 # Here the size of each output sample is set to 1.
 # Alternatively, it can be generalized to nn.Linear(num_ftrs, len(class_names)).
@@ -146,6 +151,6 @@ exp_lr_scheduler = lr_scheduler.StepLR(optimizer_ft, step_size=7, gamma=0.1)
 model_ft = train_model(model_ft, criterion, optimizer_ft, exp_lr_scheduler, num_epochs=2)
 
 # save model
-torch.save(model_ft.state_dict(), 'fakeddit_resnet.pt')
+torch.save(model_ft.state_dict(), 'fakeddit_resnet2.pt')
 
-torch.save(model_ft, "resnet_model_save")
+torch.save(model_ft, "resnet_model_save2")
