@@ -7,6 +7,7 @@ import random
 from tqdm import tqdm_notebook
 from uuid import uuid4
 from sklearn.metrics import matthews_corrcoef, confusion_matrix
+from numpyencoder import NumpyEncoder
 
 ## Torch Modules
 import torch
@@ -28,7 +29,6 @@ except AttributeError:
 else:
     # Handle target environment that doesn't support HTTPS verification
     ssl._create_default_https_context = _create_unverified_https_context
-
 
 # loading pre-trained models
 from transformers import get_linear_schedule_with_warmup
@@ -253,7 +253,7 @@ bert_optimizer = AdamW(bert_model.parameters(),
 
 # Number of training epochs. The BERT authors recommend between 2 and 4. 
 # We chose to run for 2,I have already seen that the model starts overfitting beyound 2 epochs
-epochs = 1
+epochs = 4
 skip_train = False
 
 # Total number of training steps is [number of batches] x [number of epochs]. 
@@ -614,8 +614,7 @@ eval_report = get_eval_report(flat_true_labels, flat_predictions)
 print("eval summary: ", eval_report)
 
 with open('eval_report.json', 'w') as filehandle2:
-    json.dump(eval_report, filehandle2)
-
+    json.dump(eval_report, filehandle2, cls=NumpyEncoder)
 
 
 # The input data dir. Should contain the .tsv files (or other data files) for the task.
