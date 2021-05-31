@@ -106,3 +106,6 @@ Please note that results in the paper are based on multimodal samples only (samp
 If there are `Unnamed`... columns, you can ignore or get rid of them. Use the `clean_title` column to get filtered text data. 
 
 `comments.tsv` consists of comments made by Reddit users on submissions in the entire released dataset. Use the `submission_id` column to identify which submission the comment is associated with. Note that one submission can have zero, one, or multiple comments.
+
+## Tips: 
+CUDA_VISIBLE_DEVICES=1 to limit python code to use second GPU
