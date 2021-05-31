@@ -613,8 +613,8 @@ def get_eval_report(labels, preds):
 eval_report = get_eval_report(flat_true_labels, flat_predictions)
 print("eval summary: ", eval_report)
 
-with open('eval_report.json', 'w') as filehandle2:
-    json.dump(eval_report, filehandle2, cls=NumpyEncoder)
+#with open('eval_report.json', 'w') as filehandle2:
+#    json.dump(eval_report, filehandle2, cls=NumpyEncoder)
 
 
 # The input data dir. Should contain the .tsv files (or other data files) for the task.
@@ -716,3 +716,6 @@ with open(output_eval_file, "w") as writer:
     for key in (result.keys()):
         logger.info("  %s = %s", key, str(result[key]))
         writer.write("%s = %s\n" % (key, str(result[key])))
+
+with open('eval_report.json', 'w') as filehandle2:
+    json.dump(eval_report, filehandle2, cls=NumpyEncoder)
