@@ -1,6 +1,6 @@
 ## Setup: 
 
-### 0: Install cuda driver like [CUDA Toolkit 10.2](https://developer.nvidia.com/cuda-10.2-download-archive?target_os=Linux&target_arch=x86_64&target_distro=CentOS&target_version=7&target_type=runfilelocal) 
+### 1: Install cuda driver like [CUDA Toolkit 10.2](https://developer.nvidia.com/cuda-10.2-download-archive?target_os=Linux&target_arch=x86_64&target_distro=CentOS&target_version=7&target_type=runfilelocal) 
 
 ```
 Install instruction in Linux: 
@@ -11,8 +11,6 @@ Update environment variable (you can add it into  ~/.bashrc):
 LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda-10.2/lib64"
 PATH="$PATH:/usr/local/cuda-10.2/bin"
 ```
-
-### 1: Install from requirements.txt (using conda or pip install) 
 
 ### 2: Install [pytorch](https://developer.nvidia.com/cuda-zone)  
 
@@ -41,6 +39,12 @@ pip install matplotlib
 
 pip install numpyencoder  --trusted-host files.pythonhosted.org
 
+## Experiments Tips: 
+### How to specify second GPU for python execution
+CUDA_VISIBLE_DEVICES=1 to limit python code to use second GPU
+
+CUDA_VISIBLE_DEVICES=0 python main.py >resnet_training_out_ephocs2.txt &
+
 
 ## Dataset: Fakeddit
 
@@ -55,7 +59,7 @@ Paper: https://arxiv.org/abs/1911.03854
 Our lab: http://nlp.cs.ucsb.edu/index.html
 
 
-## Getting Started
+### Getting Started
 
 Follow the instructions to download the dataset. You can download text, metadata, comment data, and image data.
 
@@ -107,5 +111,3 @@ If there are `Unnamed`... columns, you can ignore or get rid of them. Use the `c
 
 `comments.tsv` consists of comments made by Reddit users on submissions in the entire released dataset. Use the `submission_id` column to identify which submission the comment is associated with. Note that one submission can have zero, one, or multiple comments.
 
-## Tips: 
-CUDA_VISIBLE_DEVICES=1 to limit python code to use second GPU
