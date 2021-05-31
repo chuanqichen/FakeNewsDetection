@@ -19,7 +19,6 @@ PATH="$PATH:/usr/local/cuda-10.2/bin"
 On MAC or Linux, it's very simple: 
 
 pip install torch==1.6.0 
-
 conda install pytorch==1.6.0 torchvision==0.7.0 cudatoolkit=10.2 -c pytorch
 
 On Windows, please follow this link [pytorch](https://developer.nvidia.com/cuda-zone):   
