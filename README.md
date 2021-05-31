@@ -17,9 +17,9 @@ PATH="$PATH:/usr/local/cuda-10.2/bin"
 ### 2: Install [pytorch](https://developer.nvidia.com/cuda-zone)  
 
 On MAC or Linux, it's very simple: 
-```
+
 pip install torch==1.6.0 
-```
+conda install pytorch==1.6.0 torchvision==0.7.0 cudatoolkit=10.2 -c pytorch
 
 On Windows, please follow this link [pytorch](https://developer.nvidia.com/cuda-zone):   
 No CUDA
@@ -28,13 +28,18 @@ To install PyTorch via pip, and do not have a CUDA-capable system or do not requ
 With CUDA
 To install PyTorch via pip, and do have a CUDA-capable system, in the above selector, choose OS: Windows, Package: Pip and the CUDA version suited to your machine. Often, the latest CUDA version is better. Then, run the command that is presented to you.
 
-### 3: Install torchvision
-pip install torchvision --trusted-host files.pythonhosted.org
+### 3: Install lxmert required libraries: 
+https://github.com/chuanqichen/FakeNewsDetection/tree/main/lxmert
 
 ### 4: Install transformer
-pip install transformers==3.0.0  --trusted-host  files.pythonhosted.org or 
+pip install transformers==3.0.0  --trusted-host  files.pythonhosted.org 
+
 pip install transformers==3.5.1  --trusted-host  files.pythonhosted.org
 
+### 5: Other libraries: 
+pip install matplotlib
+
+pip install numpyencoder  --trusted-host files.pythonhosted.org
 
 
 ## Dataset: Fakeddit
@@ -101,3 +106,6 @@ Please note that results in the paper are based on multimodal samples only (samp
 If there are `Unnamed`... columns, you can ignore or get rid of them. Use the `clean_title` column to get filtered text data. 
 
 `comments.tsv` consists of comments made by Reddit users on submissions in the entire released dataset. Use the `submission_id` column to identify which submission the comment is associated with. Note that one submission can have zero, one, or multiple comments.
+
+## Tips: 
+CUDA_VISIBLE_DEVICES=1 to limit python code to use second GPU

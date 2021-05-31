@@ -33,6 +33,7 @@ from transformers import (
 import logging
 logging.basicConfig(level = logging.ERROR)
 import ssl
+from numpyencoder import NumpyEncoder
 
 try:
     _create_unverified_https_context = ssl._create_unverified_context
@@ -42,11 +43,6 @@ except AttributeError:
 else:
     # Handle target environment that doesn't support HTTPS verification
     ssl._create_default_https_context = _create_unverified_https_context
-data_transforms = transforms.Compose([
-    transforms.Resize((224, 224)),
-    transforms.ToTensor()
-])
-
 
 # If there's a GPU available...
 if torch.cuda.is_available():    
@@ -629,8 +625,7 @@ eval_report = get_eval_report(flat_true_labels, flat_predictions)
 print("eval summary: ", eval_report)
 
 with open('eval_report.json', 'w') as filehandle2:
-    json.dump(eval_report, filehandle2)
-
+    json.dump(eval_report, filehandle2, cls=NumpyEncoder)
 
 
 # The input data dir. Should contain the .tsv files (or other data files) for the task.

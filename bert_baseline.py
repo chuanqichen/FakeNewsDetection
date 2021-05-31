@@ -7,6 +7,7 @@ import random
 from tqdm import tqdm_notebook
 from uuid import uuid4
 from sklearn.metrics import matthews_corrcoef, confusion_matrix
+from numpyencoder import NumpyEncoder
 
 ## Torch Modules
 import torch
@@ -28,12 +29,6 @@ except AttributeError:
 else:
     # Handle target environment that doesn't support HTTPS verification
     ssl._create_default_https_context = _create_unverified_https_context
-data_transforms = transforms.Compose([
-    transforms.Resize((224, 224)),
-    transforms.ToTensor()
-])
-
-
 
 # loading pre-trained models
 from transformers import get_linear_schedule_with_warmup
@@ -212,7 +207,8 @@ df_test = df_test[df_test['clean_title'].notna()]
 num_of_way = 2 #2 for 2-way, 3 for 3-way, 6 for 6-way
 
 # BERT
-bert_model = BertForSequenceClassification.from_pretrained("bert-base-uncased", # Use the 12-layer BERT model, with an uncased vocab.
+#bert_model = BertForSequenceClassification.from_pretrained("../PretrainedModels/bert-base-uncased", # Use the 12-layer BERT model, with an uncased vocab.
+bert_model = BertForSequenceClassification.from_pretrained("../PretrainedModels/", # Use the 12-layer BERT model, with an uncased vocab.
                                                                 num_labels = num_of_way, # The number of output labels--2 for binary classification.
                                                                                 # You can increase this for multi-class tasks.   
                                                                 output_attentions = False, # Whether the model returns attentions weights.
@@ -257,7 +253,7 @@ bert_optimizer = AdamW(bert_model.parameters(),
 
 # Number of training epochs. The BERT authors recommend between 2 and 4. 
 # We chose to run for 2,I have already seen that the model starts overfitting beyound 2 epochs
-epochs = 1
+epochs = 4
 skip_train = False
 
 # Total number of training steps is [number of batches] x [number of epochs]. 
@@ -618,8 +614,7 @@ eval_report = get_eval_report(flat_true_labels, flat_predictions)
 print("eval summary: ", eval_report)
 
 with open('eval_report.json', 'w') as filehandle2:
-    json.dump(eval_report, filehandle2)
-
+    json.dump(eval_report, filehandle2, cls=NumpyEncoder)
 
 
 # The input data dir. Should contain the .tsv files (or other data files) for the task.
