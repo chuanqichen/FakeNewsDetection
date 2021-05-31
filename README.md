@@ -42,6 +42,7 @@ pip install numpyencoder  --trusted-host files.pythonhosted.org
 ## Experiments Tips: 
 ### How to specify second GPU for python execution
 CUDA_VISIBLE_DEVICES=1 to limit python code to use second GPU
+
 CUDA_VISIBLE_DEVICES=0 python main.py >resnet_training_out_ephocs2.txt &
 
 
