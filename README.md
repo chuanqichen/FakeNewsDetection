@@ -17,9 +17,9 @@ PATH="$PATH:/usr/local/cuda-10.2/bin"
 ### 2: Install [pytorch](https://developer.nvidia.com/cuda-zone)  
 
 On MAC or Linux, it's very simple: 
-```
+
 pip install torch==1.6.0 
-```
+conda install pytorch==1.6.0 torchvision==0.7.0 cudatoolkit=10.2 -c pytorch
 
 On Windows, please follow this link [pytorch](https://developer.nvidia.com/cuda-zone):   
 No CUDA
@@ -28,13 +28,16 @@ To install PyTorch via pip, and do not have a CUDA-capable system or do not requ
 With CUDA
 To install PyTorch via pip, and do have a CUDA-capable system, in the above selector, choose OS: Windows, Package: Pip and the CUDA version suited to your machine. Often, the latest CUDA version is better. Then, run the command that is presented to you.
 
-### 3: Install torchvision
-pip install torchvision --trusted-host files.pythonhosted.org
+### 3: Install lxmert required libraries: 
+https://github.com/chuanqichen/FakeNewsDetection/tree/main/lxmert
 
 ### 4: Install transformer
-pip install transformers==3.0.0  --trusted-host  files.pythonhosted.org or 
+pip install transformers==3.0.0  --trusted-host  files.pythonhosted.org 
+
 pip install transformers==3.5.1  --trusted-host  files.pythonhosted.org
 
+### 5: Install matplotlib
+pip install matplotlib
 
 
 ## Dataset: Fakeddit
