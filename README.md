@@ -38,6 +38,7 @@ pip install transformers==3.5.1  --trusted-host  files.pythonhosted.org
 
 ### 5: Other libraries: 
 pip install matplotlib
+
 pip install numpyencoder  --trusted-host files.pythonhosted.org
 
 
