@@ -207,7 +207,8 @@ df_test = df_test[df_test['clean_title'].notna()]
 num_of_way = 2 #2 for 2-way, 3 for 3-way, 6 for 6-way
 
 # BERT
-bert_model = BertForSequenceClassification.from_pretrained("bert-base-uncased", # Use the 12-layer BERT model, with an uncased vocab.
+#bert_model = BertForSequenceClassification.from_pretrained("../PretrainedModels/bert-base-uncased", # Use the 12-layer BERT model, with an uncased vocab.
+bert_model = BertForSequenceClassification.from_pretrained("../PretrainedModels/", # Use the 12-layer BERT model, with an uncased vocab.
                                                                 num_labels = num_of_way, # The number of output labels--2 for binary classification.
                                                                                 # You can increase this for multi-class tasks.   
                                                                 output_attentions = False, # Whether the model returns attentions weights.
