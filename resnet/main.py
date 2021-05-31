@@ -143,7 +143,9 @@ optimizer_ft = optim.Adam(model_ft.parameters(), lr=1e-4)
 exp_lr_scheduler = lr_scheduler.StepLR(optimizer_ft, step_size=7, gamma=0.1)
 
 # Train the model
-model_ft = train_model(model_ft, criterion, optimizer_ft, exp_lr_scheduler, num_epochs=1)
+model_ft = train_model(model_ft, criterion, optimizer_ft, exp_lr_scheduler, num_epochs=2)
 
 # save model
 torch.save(model_ft.state_dict(), 'fakeddit_resnet.pt')
+
+torch.save(model_ft, "resnet_model_save")
