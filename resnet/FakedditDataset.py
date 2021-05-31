@@ -86,13 +86,14 @@ class FakedditHybridDataset(FakedditImageDataset):
         try:
             # Get text embedding
             # Tokenize sentence
-            sent = self.csv_frame.loc(idx, 'clean_title')
+            sent = self.csv_frame.loc[idx, 'clean_title']
             # input_ids_bert = self.bert_tokenizer.encode(sent, add_special_tokens=True)
             bert_encoded_dict = self.bert_tokenizer.encode_plus(
                 sent,  # Sentence to encode.
                 add_special_tokens=True,  # Add '[CLS]' and '[SEP]'
                 max_length=120,  # Pad & truncate all sentences.
-                pad_to_max_length=True,
+                #pad_to_max_length=True,
+                padding='max_length',
                 return_attention_mask=True,  # Construct attn. masks.
                 return_tensors='pt',  # Return pytorch tensors.
             )
@@ -111,8 +112,9 @@ class FakedditHybridDataset(FakedditImageDataset):
             if self.transform:
                 image = self.transform(image)
             return bert_input_id, bert_attention_mask, image, label
-        except Exception:
+        except Exception as e:
             #print(f"Corrupted image {img_name}")
+            #raise(e)
             return None
 
 
@@ -122,7 +124,9 @@ def my_collate(batch):
 
 
 if __name__ == "__main__":
-    fake_data = FakedditImageDataset(csv_file='/home/akahs/Data/multimodal_test_public.tsv', root_dir='/home/akahs/Data/public_image_set/')
-    for k in range(10):
-        one_img = fake_data[k]
-        print(one_img[0].size, one_img[0].mode)
+    fake_data = FakedditHybridDataset(csv_file='/home/akahs/Data/multimodal_test_public.tsv', root_dir='/home/akahs/Data/public_image_set/')
+    for k in range(3):
+        hybrid = fake_data[k]
+        print("Embedding:", hybrid[0])
+        print("mask:", hybrid[1])
+        print("Image size:", hybrid[2].size, hybrid[2].mode)
