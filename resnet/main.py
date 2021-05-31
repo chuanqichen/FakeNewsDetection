@@ -3,6 +3,7 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.optim import lr_scheduler
 from torchvision import transforms, models
+from my_resnet import resnet50_2way
 from FakedditDataset import FakedditDataset, my_collate
 import os, time, copy
 from tqdm import tqdm
@@ -39,6 +40,7 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print(device)
 
 print("Note: corrupted images will be skipped in training")
+
 
 def train_model(model, criterion, optimizer, scheduler, num_epochs=2, report_len=500):
     since = time.time()
@@ -122,12 +124,12 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=2, report_len
 
 
 # Initialize model and optimizer
-#model_ft = models.resnet18(pretrained=True)
-model_ft = models.resnet50(pretrained=True)
-num_ftrs = model_ft.fc.in_features
+model_ft = resnet50_2way(pretrained=True)
+# model_ft = models.resnet50(pretrained=True)
+# num_ftrs = model_ft.fc.in_features
 # Here the size of each output sample is set to 1.
 # Alternatively, it can be generalized to nn.Linear(num_ftrs, len(class_names)).
-model_ft.fc = nn.Linear(num_ftrs, 1)
+# model_ft.fc = nn.Linear(num_ftrs, 1)
 
 model_ft = model_ft.to(device)
 
