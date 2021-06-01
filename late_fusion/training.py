@@ -7,7 +7,7 @@ import numpy as np
 from tqdm import tqdm
 import torch
 from statistics import mean
-from sklearn.metrics import matthews_corrcoef, confusion_matrix, f1_score
+from sklearn.metrics import matthews_corrcoef, confusion_matrix, f1_score, accuracy_score
 from numpyencoder import NumpyEncoder
 
 
@@ -141,14 +141,15 @@ class ModelTrainer:
                 bat_labels = batch['label']
                 bat_out = self.model(batch)
                 t_pred = bat_out > 0.5
-                l_pred.append(t_pred.squeeze().numpy())
-                l_labels.append(bat_labels.squeeze().numpy())
+                l_pred.append(t_pred.squeeze().cpu().numpy())
+                l_labels.append(bat_labels.squeeze().cpu().numpy())
         v_pred = np.concatenate(l_pred, axis=0)
         v_labels = np.concatenate(l_labels, axis=0)
         metrics = {
             'cmat': confusion_matrix(v_labels, v_pred),
             'f1': f1_score(v_labels, v_pred),
-            'mcc': matthews_corrcoef(v_labels, v_pred)
+            'mcc': matthews_corrcoef(v_labels, v_pred),
+            'accuracy': accuracy_score(v_labels, v_pred)
         }
         with open(json_path, 'w') as j:
             json.dump(metrics, j, cls=NumpyEncoder)
