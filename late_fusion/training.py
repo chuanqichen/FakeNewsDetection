@@ -136,7 +136,7 @@ class ModelTrainer:
         self.model.eval()
         l_pred, l_labels = [], []
         with torch.no_grad():
-            for batch in self._dataloaders['test']:
+            for batch in tqdm(self._dataloaders['test']):
                 batch = {x: batch[x].to(self.device) for x in batch}
                 bat_labels = batch['label']
                 bat_out = self.model(batch)

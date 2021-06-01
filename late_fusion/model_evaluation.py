@@ -50,4 +50,5 @@ dataloaders = {x: torch.utils.data.DataLoader(hybrid_datasets[x], batch_size=64,
 trainer = ModelTrainer(l_datatypes, hybrid_datasets, dataloaders, hybrid_model)
 
 # Evaluate on test set
+print("Evaluating model on test set...")
 trainer.generate_eval_report('report.json')
