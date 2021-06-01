@@ -13,20 +13,30 @@ class ModelTrainer:
         data_types (list): a list containing data set types, e.g. train, validate, test
         datasets (dict): a dict containing datasets for each type in data_types
         dataloaders (dict): a dict containing dataloaders
+        model (Module): the model to be trained
     """
 
-    def __init__(self, data_types, datasets, dataloaders):
+    def __init__(self, data_types: list, datasets: dict, dataloaders: dict, model: torch.nn.Module):
         assert isinstance(datasets, dict)
         for datatype in data_types:
             assert datatype in datasets and datatype in dataloaders, "Missing dataset or dataloader"
         self._l_datatypes = data_types
         self._datasets = datasets
         self._dataloaders = dataloaders
+        self.model = model
 
-    def train_model(self, model, criterion, optimizer, scheduler, num_epochs=2, report_len=500):
+    def save_model(self, path):
+        """Save the trained model
+
+        :param path: path to saved model
+        """
+        print(f"saving model to {path}")
+        torch.save(self.model.state_dict(), path)
+
+    def train_model(self, criterion, optimizer, scheduler, num_epochs=2, report_len=500):
         since = time.time()
 
-        best_model_wts = copy.deepcopy(model.state_dict())
+        best_model_wts = copy.deepcopy(self.model.state_dict())
         best_acc = 0.0
 
         # Check device
@@ -45,9 +55,9 @@ class ModelTrainer:
             for phase in self._l_datatypes:
                 print(f'{phase} phase')
                 if phase == 'train':
-                    model.train()  # Set model to training mode
+                    self.model.train()  # Set model to training mode
                 else:
-                    model.eval()  # Set model to evaluate mode
+                    self.model.eval()  # Set model to evaluate mode
 
                 running_loss = 0.0
                 running_corrects = 0
@@ -68,7 +78,7 @@ class ModelTrainer:
                     # forward
                     # track history if only in train
                     with torch.set_grad_enabled(phase == 'train'):
-                        outputs = model(inputs)
+                        outputs = self.model(inputs)
                         # print(f"output shape: {outputs.size()}; target shape: {labels.size()}")
                         # _, preds = torch.max(outputs, 1)
                         t_pred = outputs > 0.5
@@ -98,7 +108,7 @@ class ModelTrainer:
                 # deep copy the model
                 if phase == 'validate' and epoch_acc > best_acc:
                     best_acc = epoch_acc
-                    best_model_wts = copy.deepcopy(model.state_dict())
+                    best_model_wts = copy.deepcopy(self.model.state_dict())
 
         time_elapsed = time.time() - since
         print('Training complete in {:.0f}m {:.0f}s'.format(
@@ -106,8 +116,7 @@ class ModelTrainer:
         print('Best val Acc: {:4f}'.format(best_acc))
 
         # load best model weights
-        model.load_state_dict(best_model_wts)
-        return model
+        self.model.load_state_dict(best_model_wts)
 
 
 
