@@ -3,8 +3,7 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.optim import lr_scheduler
 from torchvision import transforms, models
-from my_resnet import resnet50_2way
-from FakedditDataset import FakedditImageDataset, my_collate
+from FakedditDataset import FakedditDataset, my_collate
 import os, time, copy
 from tqdm import tqdm
 from collections import deque
@@ -21,7 +20,7 @@ else:
     ssl._create_default_https_context = _create_unverified_https_context
 
 data_transforms = transforms.Compose([
-    transforms.Resize((224, 224)),
+    transforms.Resize((299, 299)),
     transforms.ToTensor()
 ])
 
@@ -29,7 +28,7 @@ csv_dir = "../../Data/"
 img_dir = "../../Data/public_image_set/"
 l_datatypes = ['train', 'validate']
 csv_fnames = {'train': 'multimodal_train.tsv', 'validate': 'multimodal_validate.tsv'}
-image_datasets = {x: FakedditImageDataset(os.path.join(csv_dir, csv_fnames[x]), img_dir, transform=data_transforms) for x in
+image_datasets = {x: FakedditDataset(os.path.join(csv_dir, csv_fnames[x]), img_dir, transform=data_transforms) for x in
                   l_datatypes}
 # Dataloader, pin_memory doesn't make a difference
 dataloaders = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=64, shuffle=True, num_workers=2, collate_fn=my_collate) for x in l_datatypes}
@@ -42,8 +41,7 @@ print(device)
 
 print("Note: corrupted images will be skipped in training")
 
-
-def train_model(model, criterion, optimizer, scheduler, num_epochs=1, report_len=500):
+def train_model(model, criterion, optimizer, scheduler, num_epochs=2, report_len=500):
     since = time.time()
 
     best_model_wts = copy.deepcopy(model.state_dict())
@@ -83,6 +81,8 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=1, report_len
                     outputs = model(inputs)
                     # print(f"output shape: {outputs.size()}; target shape: {labels.size()}")
                     # _, preds = torch.max(outputs, 1)
+                    #t_pred = outputs > 0.5
+                    outputs = torch.nn.functional.softmax(outputs[0], dim=0)
                     t_pred = outputs > 0.5
                     acc = (t_pred.squeeze() == labels).float().sum() / len(labels)
                     acc_q.append(acc.item())
@@ -111,7 +111,6 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=1, report_len
             if phase == 'validate' and epoch_acc > best_acc:
                 best_acc = epoch_acc
                 best_model_wts = copy.deepcopy(model.state_dict())
-                torch.save(best_model_wts, "resnet_best_model_epochs20_full_train")
 
         print()
 
@@ -130,14 +129,14 @@ def set_parameter_requires_grad(model, feature_extracting):
             param.requires_grad = False
 
 # Initialize model and optimizer
-model_ft = resnet50_2way(pretrained=True)
-# model_ft = models.resnet50(pretrained=True)
-# num_ftrs = model_ft.fc.in_features
+#model_ft = models.resnet18(pretrained=True)
+#model_ft = models.resnet50(pretrained=True)
+model_ft = models.inception_v3(pretrained=True)
 set_parameter_requires_grad(model_ft, True)   # freeze the pretrained model
-
+num_ftrs = model_ft.fc.in_features
 # Here the size of each output sample is set to 1.
 # Alternatively, it can be generalized to nn.Linear(num_ftrs, len(class_names)).
-# model_ft.fc = nn.Linear(num_ftrs, 1)
+model_ft.fc = nn.Linear(num_ftrs, 1)
 
 model_ft = model_ft.to(device)
 
@@ -152,9 +151,9 @@ optimizer_ft = optim.Adam(model_ft.parameters(), lr=1e-4)
 exp_lr_scheduler = lr_scheduler.StepLR(optimizer_ft, step_size=7, gamma=0.1)
 
 # Train the model
-model_ft = train_model(model_ft, criterion, optimizer_ft, exp_lr_scheduler, num_epochs=20)
+model_ft = train_model(model_ft, criterion, optimizer_ft, exp_lr_scheduler, num_epochs=2)
 
 # save model
-torch.save(model_ft.state_dict(), 'fakeddit_resnet_epochs20_full_train.pt')
+torch.save(model_ft.state_dict(), 'fakeddit_inception_epochs2.pt')
 
-torch.save(model_ft, "resnet_model_save_epochs20_full_train")
+torch.save(model_ft, "inception_model_save_epochs2")
