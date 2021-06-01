@@ -20,7 +20,7 @@ else:
     ssl._create_default_https_context = _create_unverified_https_context
 
 data_transforms = transforms.Compose([
-    transforms.Resize((224, 224)),
+    transforms.Resize((299, 299)),
     transforms.ToTensor()
 ])
 
@@ -81,6 +81,8 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=2, report_len
                     outputs = model(inputs)
                     # print(f"output shape: {outputs.size()}; target shape: {labels.size()}")
                     # _, preds = torch.max(outputs, 1)
+                    #t_pred = outputs > 0.5
+                    outputs = torch.nn.functional.softmax(outputs[0], dim=0)
                     t_pred = outputs > 0.5
                     acc = (t_pred.squeeze() == labels).float().sum() / len(labels)
                     acc_q.append(acc.item())
@@ -129,7 +131,7 @@ def set_parameter_requires_grad(model, feature_extracting):
 # Initialize model and optimizer
 #model_ft = models.resnet18(pretrained=True)
 #model_ft = models.resnet50(pretrained=True)
-model_ft = models.Xception(pretrained=True)
+model_ft = models.inception_v3(pretrained=True)
 set_parameter_requires_grad(model_ft, True)   # freeze the pretrained model
 num_ftrs = model_ft.fc.in_features
 # Here the size of each output sample is set to 1.
@@ -152,6 +154,6 @@ exp_lr_scheduler = lr_scheduler.StepLR(optimizer_ft, step_size=7, gamma=0.1)
 model_ft = train_model(model_ft, criterion, optimizer_ft, exp_lr_scheduler, num_epochs=2)
 
 # save model
-torch.save(model_ft.state_dict(), 'fakeddit_Xception_epochs2.pt')
+torch.save(model_ft.state_dict(), 'fakeddit_inception_epochs2.pt')
 
-torch.save(model_ft, "Xception_model_save_epochs2")
+torch.save(model_ft, "inception_model_save_epochs2")
