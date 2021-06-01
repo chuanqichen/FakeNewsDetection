@@ -17,7 +17,8 @@ bert_classifier = BertForSequenceClassification.from_pretrained('../bert_save_di
 
 # Load resnet
 resnet_model = resnet50_2way(pretrained=False)
-resnet_dict = torch.load('../resnet/fakeddit_resnet.pt', map_location=torch.device('cpu'))
+# resnet_dict = torch.load('../resnet/resnet_epc20.pt', map_location=torch.device('cpu'))
+resnet_dict = torch.load('../resnet/resnet_epc20.pt')
 resnet_model.load_state_dict(resnet_dict)
 
 # Create fusion model
@@ -66,4 +67,4 @@ trainer.save_model('hybrid_model.pt')
 #######################
 #       Testing
 #######################
-trainer.generate_eval_report('report.json')
+trainer.generate_eval_report('hybrid_report.json')
