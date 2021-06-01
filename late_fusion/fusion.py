@@ -62,7 +62,7 @@ exp_lr_scheduler = lr_scheduler.StepLR(optimizer_ft, step_size=7, gamma=0.1)
 # Trainer isntance
 trainer = ModelTrainer(l_datatypes, hybrid_datasets, dataloaders, hybrid_model)
 # Train the model
-trainer.train_model(criterion, optimizer_ft, exp_lr_scheduler, num_epochs=1)
+trainer.train_model(criterion, optimizer_ft, exp_lr_scheduler, num_epochs=3, report_len=1000)
 trainer.save_model('hybrid_model.pt')
 
 

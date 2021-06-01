@@ -94,6 +94,7 @@ class FakedditHybridDataset(FakedditImageDataset):
                 max_length=120,  # Pad & truncate all sentences.
                 #pad_to_max_length=True,
                 padding='max_length',
+                truncation=True,
                 return_attention_mask=True,  # Construct attn. masks.
                 return_tensors='pt',  # Return pytorch tensors.
             )
