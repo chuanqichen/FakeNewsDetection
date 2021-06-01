@@ -1,6 +1,6 @@
 from torch import nn
 from torch.nn import Module
-from transformers import BertModel
+from transformers import BertModel, BertForSequenceClassification
 from torchvision.models import ResNet
 
 
@@ -14,9 +14,11 @@ class LateFusionModel(Module):
 
     def __init__(self, resnet_model, bert_model):
         super(LateFusionModel, self).__init__()
-        assert isinstance(bert_model, BertModel), "Bert model must be a BertModel (e.g. sequence_classifier.bert)"
+        #assert isinstance(bert_model, BertModel), "Bert model must be a BertModel (e.g. sequence_classifier.bert)"
+        assert isinstance(bert_model, BertForSequenceClassification)
         assert isinstance(resnet_model, ResNet), "resnet model must be a ResNet instance!"
         # --- modify the resnet model
+        resnet_feature_size = resnet_model.fc.in_features
         self._resnet = resnet_model
         self._resnet.fc = nn.Identity()
         # Freeze resnet
@@ -24,14 +26,14 @@ class LateFusionModel(Module):
             param.requires_grad = False
         # ---- Set up the bert model for inference ---
         # bert_model.config.output_hidden_states = True
-        self._bert = bert_model
+        self._bert = bert_model.bert
+        bert_feature_size = bert_model.classifier.in_features
+        #self._bert.classifier = nn.Identity()
         self._bert.eval()
         # Freeze bert
         for param in self._bert.parameters():
             param.requires_grad = False
         # Create the last linear layer
-        bert_feature_size = bert_model.pooler.out_features
-        resnet_feature_size = resnet_model.fc.in_features
         self.linear = nn.Linear(bert_feature_size + resnet_feature_size, 1)
 
     def forward(self, input):
@@ -39,7 +41,8 @@ class LateFusionModel(Module):
 
         :param input: input data as a dictionary with keys
         """
-        bert_output = self._bert(input['bert_input_id'], attention_mask=input['bert_attention_mask'])
-        cls_vector = bert_output[1]
+        #print(input)
+        bert_output = self._bert(input['bert_input_id'].squeeze(), attention_mask=input['bert_attention_mask'].squeeze())
+        cls_vector = bert_output.pooler_output
         resnet_output = self._resnet(input['image'])
-        print(cls_vector.size, resnet_output.size)
+        print(cls_vector.size(), resnet_output.size())

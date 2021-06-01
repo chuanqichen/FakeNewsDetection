@@ -1,23 +1,29 @@
+import sys
+import os
+resnet_dir = os.path.join(os.path.dirname(__file__), '../resnet/')
+sys.path.append(resnet_dir)
 import torch
 from torchvision import transforms
 from transformers import BertForSequenceClassification
-from resnet.my_resnet import resnet50_2way
-from resnet.FakedditDataset import FakedditHybridDataset, my_collate
+from my_resnet import resnet50_2way
+from FakedditDataset import FakedditHybridDataset, my_collate
 from HybridModel import LateFusionModel
-import os
 
 # Load bert model
 bert_classifier = BertForSequenceClassification.from_pretrained('../bert_save_dir')
-print(bert_classifier)
+#print(bert_classifier)
 
 # Load resnet
 resnet_model = resnet50_2way(pretrained=False)
-resnet_dict = torch.load('../fakeddit_resnet.pt', map_location=torch.device('cpu'))
+resnet_dict = torch.load('../resnet/fakeddit_resnet.pt', map_location=torch.device('cpu'))
 resnet_model.load_state_dict(resnet_dict)
-print(resnet_model)
+#print(resnet_model)
 
 # Create fusion model
-hybrid_model = LateFusionModel(resnet_model, bert_classifier.bert)
+hybrid_model = LateFusionModel(resnet_model, bert_classifier)
+#print(hybrid_model._bert.config.return_dict)
+#print(hybrid_model._bert)
+#print(hybrid_model._resnet)
 
 # Prepare datesets
 csv_dir = "../../Data/"
@@ -37,4 +43,9 @@ dataloaders = {x: torch.utils.data.DataLoader(hybrid_datasets[x], batch_size=64,
                                               collate_fn=my_collate) for x in l_datatypes}
 
 # Test
-hybrid_model(dataloaders['train'][0])
+test_in = next(iter(dataloaders['train']))
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+print(device)
+for key in test_in:
+    test_in[key].to(device)
+hybrid_model(test_in)
