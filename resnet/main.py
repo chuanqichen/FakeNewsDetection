@@ -3,7 +3,8 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.optim import lr_scheduler
 from torchvision import transforms, models
-from FakedditDataset import FakedditDataset, my_collate
+from my_resnet import resnet50_2way
+from FakedditDataset import FakedditImageDataset, my_collate
 import os, time, copy
 from tqdm import tqdm
 from collections import deque
@@ -28,7 +29,7 @@ csv_dir = "../../Data/"
 img_dir = "../../Data/public_image_set/"
 l_datatypes = ['train', 'validate']
 csv_fnames = {'train': 'multimodal_train.tsv', 'validate': 'multimodal_validate.tsv'}
-image_datasets = {x: FakedditDataset(os.path.join(csv_dir, csv_fnames[x]), img_dir, transform=data_transforms) for x in
+image_datasets = {x: FakedditImageDataset(os.path.join(csv_dir, csv_fnames[x]), img_dir, transform=data_transforms) for x in
                   l_datatypes}
 # Dataloader, pin_memory doesn't make a difference
 dataloaders = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=64, shuffle=True, num_workers=2, collate_fn=my_collate) for x in l_datatypes}
@@ -40,6 +41,7 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print(device)
 
 print("Note: corrupted images will be skipped in training")
+
 
 def train_model(model, criterion, optimizer, scheduler, num_epochs=1, report_len=500):
     since = time.time()
@@ -128,13 +130,14 @@ def set_parameter_requires_grad(model, feature_extracting):
             param.requires_grad = False
 
 # Initialize model and optimizer
-#model_ft = models.resnet18(pretrained=True)
-model_ft = models.resnet50(pretrained=True)
-#set_parameter_requires_grad(model_ft, True)   # freeze the pretrained model
-num_ftrs = model_ft.fc.in_features
+model_ft = resnet50_2way(pretrained=True)
+# model_ft = models.resnet50(pretrained=True)
+# num_ftrs = model_ft.fc.in_features
+set_parameter_requires_grad(model_ft, True)   # freeze the pretrained model
+
 # Here the size of each output sample is set to 1.
 # Alternatively, it can be generalized to nn.Linear(num_ftrs, len(class_names)).
-model_ft.fc = nn.Linear(num_ftrs, 1)
+# model_ft.fc = nn.Linear(num_ftrs, 1)
 
 model_ft = model_ft.to(device)
 
