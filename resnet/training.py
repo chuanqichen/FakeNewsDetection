@@ -67,10 +67,11 @@ class ModelTrainer:
                 acc_q = deque(maxlen=report_len)
                 # Iterate over data.
                 counter = 0
-                for inputs, labels in tqdm(self._dataloaders[phase]):
+                for inputs in tqdm(self._dataloaders[phase]):
                     counter += 1
-                    inputs = inputs.to(device)
-                    labels = labels.to(device)
+                    # move to gpu
+                    inputs = {x: inputs[x].to(device) for x in inputs}
+                    labels = inputs['label']
 
                     # zero the parameter gradients
                     optimizer.zero_grad()
@@ -82,6 +83,7 @@ class ModelTrainer:
                         # print(f"output shape: {outputs.size()}; target shape: {labels.size()}")
                         # _, preds = torch.max(outputs, 1)
                         t_pred = outputs > 0.5
+                        #print(f'pred: {t_pred.device}', f'labels: {labels.device}')
                         acc = (t_pred.squeeze() == labels).float().sum() / len(labels)
                         acc_q.append(acc.item())
                         loss = criterion(outputs, labels.unsqueeze(-1).float())
@@ -94,7 +96,7 @@ class ModelTrainer:
                             optimizer.step()
 
                     # statistics
-                    running_loss += loss.item() * inputs.size(0)
+                    running_loss += loss.item() * inputs['image'].size(0)
                     running_corrects += torch.sum(t_pred.squeeze() == labels)
                 if phase == 'train':
                     scheduler.step()
