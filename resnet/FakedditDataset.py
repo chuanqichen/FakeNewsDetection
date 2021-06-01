@@ -111,7 +111,9 @@ class FakedditHybridDataset(FakedditImageDataset):
             # sample = {'image': image, 'name': img_name, 'label': label}
             if self.transform:
                 image = self.transform(image)
-            return bert_input_id, bert_attention_mask, image, label
+            # return bert_input_id, bert_attention_mask, image, label
+            return {'bert_input_id': bert_input_id, 'bert_attention_mask': bert_attention_mask, 'image': image,
+                    'label': label}
         except Exception as e:
             #print(f"Corrupted image {img_name}")
             #raise(e)

@@ -3,11 +3,12 @@ from torchvision import transforms
 from transformers import BertForSequenceClassification
 from resnet.my_resnet import resnet50_2way
 from resnet.FakedditDataset import FakedditHybridDataset, my_collate
+from HybridModel import LateFusionModel
 import os
 
 # Load bert model
-bert_model = BertForSequenceClassification.from_pretrained('../bert_save_dir')
-print(bert_model)
+bert_classifier = BertForSequenceClassification.from_pretrained('../bert_save_dir')
+print(bert_classifier)
 
 # Load resnet
 resnet_model = resnet50_2way(pretrained=False)
@@ -16,7 +17,7 @@ resnet_model.load_state_dict(resnet_dict)
 print(resnet_model)
 
 # Create fusion model
-
+hybrid_model = LateFusionModel(resnet_model, bert_classifier.bert)
 
 # Prepare datesets
 csv_dir = "../../Data/"
@@ -34,3 +35,6 @@ dataset_sizes = {x: len(hybrid_datasets[x]) for x in l_datatypes}
 # Dataloader
 dataloaders = {x: torch.utils.data.DataLoader(hybrid_datasets[x], batch_size=64, shuffle=True, num_workers=2,
                                               collate_fn=my_collate) for x in l_datatypes}
+
+# Test
+hybrid_model(dataloaders['train'][0])
