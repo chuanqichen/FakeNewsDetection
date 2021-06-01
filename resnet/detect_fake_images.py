@@ -82,8 +82,8 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=2, report_len
                     # print(f"output shape: {outputs.size()}; target shape: {labels.size()}")
                     # _, preds = torch.max(outputs, 1)
                     #t_pred = outputs > 0.5
-                    outputs = torch.nn.functional.softmax(outputs[0], dim=0)
-                    t_pred = outputs > 0.5
+                    output = torch.nn.functional.softmax(outputs[0], dim=0)
+                    t_pred = output > 0.5
                     acc = (t_pred.squeeze() == labels).float().sum() / len(labels)
                     acc_q.append(acc.item())
                     loss = criterion(outputs, labels.unsqueeze(-1).float())
