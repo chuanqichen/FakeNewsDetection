@@ -3,10 +3,8 @@ import os
 resnet_dir = os.path.join(os.path.dirname(__file__), '../resnet/')
 sys.path.append(resnet_dir)
 import torch
-from torch import nn, optim
-from torch.optim import lr_scheduler
 from torchvision import transforms
-from transformers import BertForSequenceClassification
+from transformers import BertForSequenceClassification, BertConfig
 from my_resnet import resnet50_2way
 from FakedditDataset import FakedditHybridDataset, my_collate
 from HybridModel import LateFusionModel
@@ -17,11 +15,13 @@ bert_classifier = BertForSequenceClassification.from_pretrained('../bert_save_di
 
 # Load resnet
 resnet_model = resnet50_2way(pretrained=False)
-resnet_dict = torch.load('../resnet/fakeddit_resnet.pt', map_location=torch.device('cpu'))
-resnet_model.load_state_dict(resnet_dict)
+# resnet_dict = torch.load('../resnet/fakeddit_resnet.pt')
+# resnet_model.load_state_dict(resnet_dict)
 
 # Create fusion model
 hybrid_model = LateFusionModel(resnet_model, bert_classifier)
+hybrid_dict = torch.load('hybrid_model_run1.pt')
+hybrid_model.load_state_dict(hybrid_dict)
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print(device)
 hybrid_model = hybrid_model.to(device)
@@ -41,29 +41,13 @@ data_transforms = transforms.Compose([
 ])
 hybrid_datasets = {x: FakedditHybridDataset(os.path.join(csv_dir, csv_fnames[x]), img_dir, transform=data_transforms)
                    for x in l_datatypes}
-dataset_sizes = {x: len(hybrid_datasets[x]) for x in l_datatypes}
 
 # Dataloader
 dataloaders = {x: torch.utils.data.DataLoader(hybrid_datasets[x], batch_size=64, shuffle=True, num_workers=2,
                                               collate_fn=my_collate) for x in l_datatypes}
 
-# Specify loss function
-# criterion = nn.CrossEntropyLoss()
-criterion = nn.BCEWithLogitsLoss()
-
-# Specify optimizer
-optimizer_ft = optim.Adam(hybrid_model.parameters(), lr=1e-4)
-
-# Decay LR by a factor of 0.1 every 7 epochs
-exp_lr_scheduler = lr_scheduler.StepLR(optimizer_ft, step_size=7, gamma=0.1)
-
-# Trainer isntance
+# Create trainer isntance
 trainer = ModelTrainer(l_datatypes, hybrid_datasets, dataloaders, hybrid_model)
-# Train the model
-trainer.train_model(criterion, optimizer_ft, exp_lr_scheduler, num_epochs=1, report_len=1000)
-trainer.save_model('hybrid_model.pt')
 
-#######################
-#       Testing
-#######################
+# Evaluate on test set
 trainer.generate_eval_report('report.json')
