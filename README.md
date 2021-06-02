@@ -34,6 +34,8 @@ pip install transformers==3.0.0  --trusted-host  files.pythonhosted.org
 
 pip install transformers==3.5.1  --trusted-host  files.pythonhosted.org
 
+pip install transformers==4.6.1  --trusted-host  files.pythonhosted.org
+
 ### 5: Other libraries: 
 pip install matplotlib
 
