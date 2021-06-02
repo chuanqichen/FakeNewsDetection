@@ -19,7 +19,7 @@ FAST_IMG_NUM = 5000
 
 class MMNDDataset:
     """
-    A GQA data example in json file:
+    A Fakeddit data example in json file:
     {
         "img_id": "2375429",
         "label": {
@@ -36,7 +36,7 @@ class MMNDDataset:
         # Loading datasets to data
         self.data = []
         for split in self.splits:
-            self.data.extend(json.load(open("data/gqa/%s.json" % split)))
+            self.data.extend(json.load(open("../data/%s.json" % split)))
         print("Load %d data from split(s) %s." % (len(self.data), self.name))
 
         # List to dict (for evaluation and others)
@@ -46,8 +46,8 @@ class MMNDDataset:
         }
 
         # Answers
-        self.ans2label = json.load(open("data/gqa/trainval_ans2label.json"))
-        self.label2ans = json.load(open("data/gqa/trainval_label2ans.json"))
+        #self.ans2label = json.load(open("../data/trainval_ans2label.json"))
+        #self.label2ans = json.load(open("../data/trainval_label2ans.json"))
         assert len(self.ans2label) == len(self.label2ans)
         for ans, label in self.ans2label.items():
             assert self.label2ans[label] == ans
@@ -66,9 +66,9 @@ class MMNDBufferLoader():
 
     def load_data(self, name, number):
         if name == 'testdev':
-            path = "data/vg_gqa_imgfeat/gqa_testdev_obj36.tsv"
+            path = "../data/multimodal_test_public.tsv"
         else:
-            path = "data/vg_gqa_imgfeat/vg_gqa_obj36.tsv"
+            path = "../data/multimodal_train.tsv"
         key = "%s_%d" % (path, number)
         if key not in self.key2data:
             self.key2data[key] = load_obj_tsv(
@@ -78,16 +78,19 @@ class MMNDBufferLoader():
         return self.key2data[key]
 
 
-gqa_buffer_loader = GQABufferLoader()
+mmnd_buffer_loader = MMNDBufferLoader()
 
 
 """
 Example in obj tsv:
-FIELDNAMES = ["img_id", "img_h", "img_w", "objects_id", "objects_conf",
-              "attrs_id", "attrs_conf", "num_boxes", "boxes", "features"]
+FIELDNAMES = ["author","clean_title","created_utc","domain",
+              "hasImage","id","image_url","linked_submission_id",
+              "num_comments","score","subreddit","title","upvote_ratio",
+              "2_way_label","3_way_label","6_way_label"]
 """
+
 class MMNDTorchDataset(Dataset):
-    def __init__(self, dataset: GQADataset):
+    def __init__(self, dataset: MMNDDataset):
         super().__init__()
         self.raw_dataset = dataset
 

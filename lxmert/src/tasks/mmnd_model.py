@@ -22,7 +22,7 @@ class MMNDModel(nn.Module):
         )
         hid_dim = self.lxrt_encoder.dim
         
-        # VQA Answer heads
+        # Fakeddit Classification heads
         self.logit_fc = nn.Sequential(
             nn.Linear(hid_dim, hid_dim * 2),
             GeLU(),

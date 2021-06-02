@@ -11,16 +11,16 @@ from tqdm import tqdm
 
 from param import args
 from pretrain.qa_answer_table import load_lxmert_qa
-from tasks.vqa_model import VQAModel
-from tasks.vqa_data import VQADataset, VQATorchDataset, VQAEvaluator
+from tasks.mmnd_model import MMNDModel
+from tasks.mmnd_data import MMNDDataset, MMNDTorchDataset, MMNDEvaluator
 
 DataTuple = collections.namedtuple("DataTuple", 'dataset loader evaluator')
 
 
 def get_data_tuple(splits: str, bs:int, shuffle=False, drop_last=False) -> DataTuple:
-    dset = VQADataset(splits)
-    tset = VQATorchDataset(dset)
-    evaluator = VQAEvaluator(dset)
+    dset = MMNDDataset(splits)
+    tset = MMNDTorchDataset(dset)
+    evaluator = MMNDEvaluator(dset)
     data_loader = DataLoader(
         tset, batch_size=bs,
         shuffle=shuffle, num_workers=args.num_workers,
