@@ -1,9 +1,14 @@
+import json
 import time
 import copy
 from collections import deque
+
+import numpy as np
 from tqdm import tqdm
 import torch
 from statistics import mean
+from sklearn.metrics import matthews_corrcoef, confusion_matrix, f1_score, accuracy_score
+from numpyencoder import NumpyEncoder
 
 
 class ModelTrainer:
@@ -24,6 +29,8 @@ class ModelTrainer:
         self._datasets = datasets
         self._dataloaders = dataloaders
         self.model = model
+        self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+        print(f'Current device: {self.device}')
 
     def save_model(self, path):
         """Save the trained model
@@ -40,8 +47,8 @@ class ModelTrainer:
         best_acc = 0.0
 
         # Check device
-        device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-        print(f'training device: {device}')
+        # device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+        # print(f'training device: {device}')
 
         # Find dataset sizes
         dataset_sizes = {x: len(self._datasets[x]) for x in self._l_datatypes}
@@ -70,7 +77,7 @@ class ModelTrainer:
                 for inputs in tqdm(self._dataloaders[phase]):
                     counter += 1
                     # move to gpu
-                    inputs = {x: inputs[x].to(device) for x in inputs}
+                    inputs = {x: inputs[x].to(self.device) for x in inputs}
                     labels = inputs['label']
 
                     # zero the parameter gradients
@@ -120,5 +127,29 @@ class ModelTrainer:
         # load best model weights
         self.model.load_state_dict(best_model_wts)
 
+    def generate_eval_report(self, json_path):
+        """Generate evaluation report using trained model
 
-
+        :param json_path: path to saved json file
+        """
+        assert 'test' in self._l_datatypes, 'test set not available!'
+        self.model.eval()
+        l_pred, l_labels = [], []
+        with torch.no_grad():
+            for batch in tqdm(self._dataloaders['test']):
+                batch = {x: batch[x].to(self.device) for x in batch}
+                bat_labels = batch['label']
+                bat_out = self.model(batch)
+                t_pred = bat_out > 0.5
+                l_pred.append(t_pred.squeeze().cpu().numpy())
+                l_labels.append(bat_labels.squeeze().cpu().numpy())
+        v_pred = np.concatenate(l_pred, axis=0)
+        v_labels = np.concatenate(l_labels, axis=0)
+        metrics = {
+            'cmat': confusion_matrix(v_labels, v_pred),
+            'f1': f1_score(v_labels, v_pred),
+            'mcc': matthews_corrcoef(v_labels, v_pred),
+            'accuracy': accuracy_score(v_labels, v_pred)
+        }
+        with open(json_path, 'w') as j:
+            json.dump(metrics, j, cls=NumpyEncoder)
