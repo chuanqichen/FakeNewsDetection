@@ -7,6 +7,7 @@ import random
 from tqdm import tqdm_notebook
 from uuid import uuid4
 from sklearn.metrics import matthews_corrcoef, confusion_matrix
+from numpyencoder import NumpyEncoder
 
 ## Torch Modules
 import torch
@@ -18,6 +19,16 @@ from torch.utils.data import Dataset, DataLoader
 from torch.utils.data import TensorDataset, random_split
 from torch.utils.data import RandomSampler, SequentialSampler
 import json
+import ssl
+
+try:
+    _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+    # Legacy Python that doesn't verify HTTPS certificates by default
+    pass
+else:
+    # Handle target environment that doesn't support HTTPS verification
+    ssl._create_default_https_context = _create_unverified_https_context
 
 # loading pre-trained models
 from transformers import get_linear_schedule_with_warmup
@@ -32,17 +43,6 @@ from transformers import (
 
 import logging
 logging.basicConfig(level = logging.ERROR)
-import ssl
-from numpyencoder import NumpyEncoder
-
-try:
-    _create_unverified_https_context = ssl._create_unverified_context
-except AttributeError:
-    # Legacy Python that doesn't verify HTTPS certificates by default
-    pass
-else:
-    # Handle target environment that doesn't support HTTPS verification
-    ssl._create_default_https_context = _create_unverified_https_context
 
 # If there's a GPU available...
 if torch.cuda.is_available():    
@@ -190,14 +190,9 @@ def format_time(elapsed):
 # The 2-way labels are:
 # 0-true
 # 1-fake
-# Whole dataset
-# df_train = pd.read_csv('../Data/all_train.tsv',encoding='UTF-8',delimiter="\t")
-# df_val = pd.read_csv('../Data/all_validate.tsv',encoding='UTF-8',delimiter="\t")
-# df_test = pd.read_csv('../Data/all_test_public.tsv',encoding='UTF-8',delimiter="\t")
-# Multimodal dataset
-df_train = pd.read_csv('../Data/multimodal_train.tsv',encoding='UTF-8',delimiter="\t")
-df_val = pd.read_csv('../Data/multimodal_validate.tsv',encoding='UTF-8',delimiter="\t")
-df_test = pd.read_csv('../Data/multimodal_test_public.tsv',encoding='UTF-8',delimiter="\t")
+df_train = pd.read_csv('../Data/all_train.tsv',encoding='UTF-8',delimiter="\t")
+df_val = pd.read_csv('../Data/all_validate.tsv',encoding='UTF-8',delimiter="\t")
+df_test = pd.read_csv('../Data/all_test_public.tsv',encoding='UTF-8',delimiter="\t")
 
 # clean NaN in clean titles
 df_train = df_train[df_train['clean_title'].notna()]
@@ -212,12 +207,18 @@ df_test = df_test[df_test['clean_title'].notna()]
 num_of_way = 2 #2 for 2-way, 3 for 3-way, 6 for 6-way
 
 # BERT
-bert_model = BertForSequenceClassification.from_pretrained("bert-base-uncased", # Use the 12-layer BERT model, with an uncased vocab.
+#bert_model = BertForSequenceClassification.from_pretrained("../PretrainedModels/bert-base-uncased", # Use the 12-layer BERT model, with an uncased vocab.
+#bert_model = BertForSequenceClassification.from_pretrained("../PretrainedModels/", # Use the 12-layer BERT model, with an uncased vocab.
+#bert_model = BertForSequenceClassification.from_pretrained("gpt2-xl", # Use the 12-layer BERT model, with an uncased vocab.
+#bert_model = BertForSequenceClassification.from_pretrained("bert-large-uncased", # Use the 12-layer BERT model, with an uncased vocab.
+bert_model = BertForSequenceClassification.from_pretrained("transfo-xl-wt103", # Use the 12-layer BERT model, with an uncased vocab.
+
                                                                 num_labels = num_of_way, # The number of output labels--2 for binary classification.
                                                                                 # You can increase this for multi-class tasks.   
                                                                 output_attentions = False, # Whether the model returns attentions weights.
                                                                 output_hidden_states = False # Whether the model returns all hidden-states.
                                                           )
+
 
 bert_model.to(device)
 bert_tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
@@ -284,8 +285,8 @@ bert_training_stats = []
 # Measure the total training time for the whole run.
 total_t0 = time.time()
 
-# Training and validation
-if not skip_train:
+# For each epoch...
+if skip_train == False:
     for epoch_i in range(0, epochs):
 
         # ========================================
@@ -347,13 +348,10 @@ if not skip_train:
             # are given and what flags are set. For our usage here, it returns
             # the loss (because we provided labels) and the "logits"--the bert_model
             # outputs prior to activation.
-            # note in older vision (3.5.1) the model output is a tuple (loss, logits)
-            outputs = bert_model(b_input_ids,
+            (loss, logits) = bert_model(b_input_ids,
                                  token_type_ids=None,
                                  attention_mask=b_input_mask,
                                  labels=b_labels)
-            loss = outputs.loss
-            logits = outputs.logits
 
             # Accumulate the training loss over all of the batches so that we can
             # calculate the average loss at the end. `loss` is a Tensor containing a
@@ -479,12 +477,10 @@ if not skip_train:
 
     print("Total training took {:} (h:mm:ss)".format(format_time(time.time()-total_t0)))
 
-if skip_train:  # Load model from dir
-    # bert_model = torch.load("bert_model_save")
-    bert_model = BertForSequenceClassification.from_pretrained('bert_save_dir/')
-else:  # save model and training statistics
-    # torch.save(bert_model, "bert_model_save")
-    bert_model.save_pretrained('bert_save_dir/')
+if skip_train:
+    bert_model = torch.load("bert_model_save")
+else:
+    torch.save(bert_model, "bert_model_save")
 
     # open output file for writing
     with open('bert_training_stats.txt', 'w') as filehandle:
@@ -505,9 +501,7 @@ else:  # save model and training statistics
     # Display the table.
     df_stats
 
-# ========================================
-#               Testing
-# ========================================
+
 # Report the number of sentences in test dataset.
 print('Number of test sentences: {:,}\n'.format(df_test.shape[0]))
 
@@ -624,14 +618,14 @@ def get_eval_report(labels, preds):
 eval_report = get_eval_report(flat_true_labels, flat_predictions)
 print("eval summary: ", eval_report)
 
-with open('eval_report.json', 'w') as filehandle2:
-    json.dump(eval_report, filehandle2, cls=NumpyEncoder)
+#with open('eval_report.json', 'w') as filehandle2:
+#    json.dump(eval_report, filehandle2, cls=NumpyEncoder)
 
 
 # The input data dir. Should contain the .tsv files (or other data files) for the task.
 DATA_DIR = "../Data/"
 
-# Bert pre-trained model selected in the list: bert-base-uncased,
+# Bert pre-trained model selected in the list: bert-base-uncased, 
 # bert-large-uncased, bert-base-cased, bert-large-cased, bert-base-multilingual-uncased,
 # bert-base-multilingual-cased, bert-base-chinese.
 BERT_MODEL = 'fakeddit_BERT.tar.gz'
@@ -686,44 +680,47 @@ eval_loss = 0
 nb_eval_steps = 0
 preds = []
 
-# for input_ids, input_mask, segment_ids, label_ids in tqdm_notebook(eval_dataloader, desc="Evaluating"):
-#     input_ids = input_ids.to(device)
-#     input_mask = input_mask.to(device)
-#     segment_ids = segment_ids.to(device)
-#     label_ids = label_ids.to(device)
-#
-#     with torch.no_grad():
-#         logits = model(input_ids, segment_ids, input_mask, labels=None)
-#
-#     # create eval loss and other metric required by the task
-#     if OUTPUT_MODE == "classification":
-#         loss_fct = nn.CrossEntropyLoss()
-#         tmp_eval_loss = loss_fct(logits.view(-1, num_labels), label_ids.view(-1))
-#     elif OUTPUT_MODE == "regression":
-#         loss_fct = MSELoss()
-#         tmp_eval_loss = loss_fct(logits.view(-1), label_ids.view(-1))
-#
-#     eval_loss += tmp_eval_loss.mean().item()
-#     nb_eval_steps += 1
-#     if len(preds) == 0:
-#         preds.append(logits.detach().cpu().numpy())
-#     else:
-#         preds[0] = np.append(
-#             preds[0], logits.detach().cpu().numpy(), axis=0)
-#
-# eval_loss = eval_loss / nb_eval_steps
-# preds = preds[0]
-# if OUTPUT_MODE == "classification":
-#     preds = np.argmax(preds, axis=1)
-# elif OUTPUT_MODE == "regression":
-#     preds = np.squeeze(preds)
-# result = compute_metrics(TASK_NAME, all_label_ids.numpy(), preds)
-#
-# result['eval_loss'] = eval_loss
-#
-# output_eval_file = os.path.join(REPORTS_DIR, "eval_results.txt")
-# with open(output_eval_file, "w") as writer:
-#     logger.info("***** Eval results *****")
-#     for key in (result.keys()):
-#         logger.info("  %s = %s", key, str(result[key]))
-#         writer.write("%s = %s\n" % (key, str(result[key])))
+for input_ids, input_mask, segment_ids, label_ids in tqdm_notebook(eval_dataloader, desc="Evaluating"):
+    input_ids = input_ids.to(device)
+    input_mask = input_mask.to(device)
+    segment_ids = segment_ids.to(device)
+    label_ids = label_ids.to(device)
+
+    with torch.no_grad():
+        logits = model(input_ids, segment_ids, input_mask, labels=None)
+
+    # create eval loss and other metric required by the task
+    if OUTPUT_MODE == "classification":
+        loss_fct = nn.CrossEntropyLoss()
+        tmp_eval_loss = loss_fct(logits.view(-1, num_labels), label_ids.view(-1))
+    elif OUTPUT_MODE == "regression":
+        loss_fct = MSELoss()
+        tmp_eval_loss = loss_fct(logits.view(-1), label_ids.view(-1))
+
+    eval_loss += tmp_eval_loss.mean().item()
+    nb_eval_steps += 1
+    if len(preds) == 0:
+        preds.append(logits.detach().cpu().numpy())
+    else:
+        preds[0] = np.append(
+            preds[0], logits.detach().cpu().numpy(), axis=0)
+
+eval_loss = eval_loss / nb_eval_steps
+preds = preds[0]
+if OUTPUT_MODE == "classification":
+    preds = np.argmax(preds, axis=1)
+elif OUTPUT_MODE == "regression":
+    preds = np.squeeze(preds)
+result = compute_metrics(TASK_NAME, all_label_ids.numpy(), preds)
+
+result['eval_loss'] = eval_loss
+
+output_eval_file = os.path.join(REPORTS_DIR, "eval_results.txt")
+with open(output_eval_file, "w") as writer:
+    logger.info("***** Eval results *****")
+    for key in (result.keys()):
+        logger.info("  %s = %s", key, str(result[key]))
+        writer.write("%s = %s\n" % (key, str(result[key])))
+
+with open('eval_report.json', 'w') as filehandle2:
+    json.dump(eval_report, filehandle2, cls=NumpyEncoder)

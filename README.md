@@ -1,7 +1,54 @@
+## Setup: 
+
+### 1: Install cuda driver like [CUDA Toolkit 10.2](https://developer.nvidia.com/cuda-10.2-download-archive?target_os=Linux&target_arch=x86_64&target_distro=CentOS&target_version=7&target_type=runfilelocal) 
+
+```
+Install instruction in Linux: 
+wget https://developer.download.nvidia.com/compute/cuda/10.2/Prod/local_installers/cuda_10.2.89_440.33.01_linux.run
+sudo sh cuda_10.2.89_440.33.01_linux.run
+
+Update environment variable (you can add it into  ~/.bashrc): 
+LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda-10.2/lib64"
+PATH="$PATH:/usr/local/cuda-10.2/bin"
+```
+
+### 2: Install [pytorch](https://developer.nvidia.com/cuda-zone)  
+
+On MAC or Linux, it's very simple: 
+
+pip install torch==1.6.0 
+conda install pytorch==1.6.0 torchvision==0.7.0 cudatoolkit=10.2 -c pytorch
+
+On Windows, please follow this link [pytorch](https://developer.nvidia.com/cuda-zone):   
+No CUDA
+To install PyTorch via pip, and do not have a CUDA-capable system or do not require CUDA, in the above selector, choose OS: Windows, Package: Pip and CUDA: None. Then, run the command that is presented to you.
+
+With CUDA
+To install PyTorch via pip, and do have a CUDA-capable system, in the above selector, choose OS: Windows, Package: Pip and the CUDA version suited to your machine. Often, the latest CUDA version is better. Then, run the command that is presented to you.
+
+### 3: Install lxmert required libraries: 
+https://github.com/chuanqichen/FakeNewsDetection/tree/main/lxmert
+
+### 4: Install transformer
+pip install transformers==3.0.0  --trusted-host  files.pythonhosted.org 
+
+pip install transformers==3.5.1  --trusted-host  files.pythonhosted.org
+
+pip install transformers==4.6.1  --trusted-host  files.pythonhosted.org
+
+### 5: Other libraries: 
+pip install matplotlib
+
+pip install numpyencoder  --trusted-host files.pythonhosted.org
+
+## Experiments Tips: 
+### How to specify second GPU for python execution
+CUDA_VISIBLE_DEVICES=1 to limit python code to use second GPU
+
+CUDA_VISIBLE_DEVICES=0 python main.py >resnet_training_out_ephocs2.txt &
 
 
-
-# Fakeddit
+## Dataset: Fakeddit
 
 Kai Nakamura, Sharon Levy, and William Yang Wang. 2020. r/Fakeddit: A New Multimodal Benchmark Dataset for Fine-grained Fake News Detection
 
@@ -14,8 +61,7 @@ Paper: https://arxiv.org/abs/1911.03854
 Our lab: http://nlp.cs.ucsb.edu/index.html
 
 
-
-## Getting Started
+### Getting Started
 
 Follow the instructions to download the dataset. You can download text, metadata, comment data, and image data.
 
@@ -66,3 +112,4 @@ Please note that results in the paper are based on multimodal samples only (samp
 If there are `Unnamed`... columns, you can ignore or get rid of them. Use the `clean_title` column to get filtered text data. 
 
 `comments.tsv` consists of comments made by Reddit users on submissions in the entire released dataset. Use the `submission_id` column to identify which submission the comment is associated with. Note that one submission can have zero, one, or multiple comments.
+
